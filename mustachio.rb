@@ -1,5 +1,8 @@
-require 'sinatra'
+require 'sinatra/base'
+require 'magickly'
 
-get '/' do
-  'Hello world!'
+class Mustachio < Sinatra::Base
+  get '/' do
+    'Hello world!'
+  end
 end

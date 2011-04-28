@@ -3,4 +3,11 @@ require 'bundler'
 Bundler.require
 
 require './mustachio'
-run Sinatra::Application
+
+map '/' do
+  run Mustachio
+end
+
+map '/magickly' do
+  run Magickly::App
+end
