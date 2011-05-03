@@ -1,6 +1,5 @@
 require 'sinatra/base'
 require 'magickly'
-require 'ruby-debug'
 
 # thanks to http://therantsandraves.com/?p=602 for the 'staches
 MUSTACHE_FILENAME = File.expand_path(File.join('public', 'images', 'mustache_03.png'))
