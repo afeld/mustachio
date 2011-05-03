@@ -10,9 +10,13 @@ GEM
     dragonfly (0.9.0)
       rack
       rack
+    face (0.0.4)
+      json (>= 1.4.6)
+      rest-client (>= 1.6.1)
     haml (3.0.25)
     httparty (0.7.7)
       crack (= 0.1.8)
+    json (1.5.1)
     linecache (0.43)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
@@ -24,11 +28,14 @@ GEM
       httparty (~> 0.7.3)
       rack-cache
       sinatra (~> 1.2.1)
+    mime-types (1.16)
     rack (1.2.2)
     rack-cache (1.0.1)
       rack (>= 0.4)
     rack-test (0.5.7)
       rack (>= 1.0)
+    rest-client (1.6.1)
+      mime-types (>= 1.16)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
       rspec-expectations (~> 2.5.0)
@@ -64,10 +71,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (>= 2.0.0)
   dragonfly (~> 0.9.0)
-  haml (~> 3.0.25)
-  httparty (~> 0.7.3)
+  face (= 0.0.4)
   magickly (~> 1.1)
   rack-test
   rspec (~> 2.4)

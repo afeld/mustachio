@@ -4,9 +4,7 @@ gem 'sinatra', '~> 1.2.3', :require => 'sinatra/base'
 gem 'dragonfly', '~> 0.9.0'
 gem 'magickly', '~> 1.1'
 
-gem 'haml', '~> 3.0.25'
-gem 'httparty', '~> 0.7.3'
-gem 'activesupport', '>= 2.0.0', :require => false
+gem 'face', '0.0.4'
 
 group :development, :test do
   gem 'rack-test'
