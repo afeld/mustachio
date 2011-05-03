@@ -16,6 +16,7 @@ GEM
     haml (3.0.25)
     httparty (0.7.7)
       crack (= 0.1.8)
+    imagesize (0.1.1)
     json (1.5.1)
     linecache (0.43)
     linecache19 (0.5.12)
@@ -73,6 +74,7 @@ PLATFORMS
 DEPENDENCIES
   dragonfly (~> 0.9.0)
   face (= 0.0.4)
+  imagesize (~> 0.1)
   magickly (~> 1.1)
   rack-test
   rspec (~> 2.4)

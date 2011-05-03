@@ -1,9 +1,11 @@
 require 'sinatra/base'
 require 'magickly'
+require 'image_size'
 require 'ruby-debug'
 
 # thanks to http://therantsandraves.com/?p=602 for the 'staches
 MUSTACHE_FILENAME = File.expand_path(File.join('public', 'images', 'mustache_03.png'))
+MUSTACHE_WIDTH = ImageSize.new(File.new(MUSTACHE_FILENAME)).get_width
 
 Magickly.dragonfly.configure do |c|
   c.analyser.add :face_data do |temp_object|
@@ -17,12 +19,21 @@ Magickly.dragonfly.configure do |c|
     commands = []
     photo_data['tags'].each do |face|
       mouth_width = (face['mouth_right']['x'] - face['mouth_left']['x']) * photo_data['width'] / 100
-      stache_width = mouth_width * (rand * 2 + 1.2)
       lip_height = (face['mouth_center']['y'] - face['nose']['y']) * photo_data['height'] / 100
-      x = (face['nose']['x'] * photo_data['width'] / 100) - (stache_width / 2)
-      y = face['nose']['y'] * photo_data['height'] / 100 + (lip_height * 0.2)
       
-      commands << "\\( #{MUSTACHE_FILENAME} -resize #{stache_width.to_i}x \\) -geometry +#{x.to_i}+#{y.to_i} -composite"
+      stache_width = mouth_width * (rand * 2 + 1.2)
+      stache_scale = stache_width / MUSTACHE_WIDTH
+      debugger
+      angle = Math.atan(
+        (face['mouth_center']['x'] - face['nose']['x']) /
+        (face['mouth_center']['y'] - face['nose']['y'])
+      ) / Math::PI * -360
+      
+      x = (face['nose']['x'] * photo_data['width'] / 100) - (stache_width / 2)
+      y = face['nose']['y'] * photo_data['height'] / 100 #+ (lip_height * 0.2)
+      
+      debugger
+      commands << "\\( \\( #{MUSTACHE_FILENAME} -geometry +#{x.to_i}+#{y.to_i} \\) +distort SRT '0,0 #{stache_scale} #{angle}' \\) -composite"
     end
     
     command_str = commands.join(' ')

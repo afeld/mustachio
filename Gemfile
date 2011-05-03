@@ -5,6 +5,7 @@ gem 'dragonfly', '~> 0.9.0'
 gem 'magickly', '~> 1.1'
 
 gem 'face', '0.0.4'
+gem 'imagesize', '~> 0.1'
 
 group :development, :test do
   gem 'rack-test'
