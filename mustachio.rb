@@ -17,7 +17,7 @@ Magickly.dragonfly.configure do |c|
     commands = []
     photo_data['tags'].each do |face|
       mouth_width = (face['mouth_right']['x'] - face['mouth_left']['x']) * photo_data['width'] / 100
-      stache_width = mouth_width * 1.8
+      stache_width = mouth_width * (rand * 2 + 1.2)
       lip_height = (face['mouth_center']['y'] - face['nose']['y']) * photo_data['height'] / 100
       x = (face['nose']['x'] * photo_data['width'] / 100) - (stache_width / 2)
       y = face['nose']['y'] * photo_data['height'] / 100 + (lip_height * 0.2)
