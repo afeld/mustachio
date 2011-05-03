@@ -10,16 +10,20 @@ Magickly.dragonfly.configure do |c|
   end
   
   c.job :mustachify do
-    data = @job.face_data
+    photo_data = @job.face_data['photos'].first
+    width = photo_data['width']
     
     commands = []
-    data['photos'].first['tags'].each do |face|
-      commands << "-page +#{face['nose']['x'].to_i}+#{face['nose']['y'].to_i} \\( #{MUSTACHE_FILENAME} -resize 100x \\)"
+    photo_data['tags'].each do |face|
+      stache_width = 100
+      x = (face['nose']['x'] * photo_data['width'] / 100).to_i - (stache_width / 2)
+      y = (face['nose']['y'] * photo_data['height'] / 100).to_i
+      
+      commands << "\\( #{MUSTACHE_FILENAME} -resize #{stache_width}x \\) -geometry +#{x}+#{y} -composite"
     end
     
     command_str = commands.join(' ')
     process :convert, command_str
-    encode :jpg
   end
 end
 
