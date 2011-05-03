@@ -1,10 +1,7 @@
 source 'http://rubygems.org'
-# Add dependencies required to use your gem here.
-# Example:
-#   gem 'activesupport', '>= 2.3.5'
 
 gem 'sinatra', '~> 1.2.3', :require => 'sinatra/base'
-gem 'rack-cache', :require => 'rack/cache'
+gem 'dragonfly', '~> 0.9.0'
 gem 'magickly', '~> 1.1'
 
 gem 'haml', '~> 3.0.25'

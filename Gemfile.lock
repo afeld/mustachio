@@ -7,7 +7,8 @@ GEM
     columnize (0.3.2)
     crack (0.1.8)
     diff-lcs (1.1.2)
-    dragonfly (0.8.2)
+    dragonfly (0.9.0)
+      rack
       rack
     haml (3.0.25)
     httparty (0.7.7)
@@ -15,10 +16,10 @@ GEM
     linecache (0.43)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
-    magickly (1.1.0)
+    magickly (1.1.1)
       activesupport (>= 2.0.0)
       addressable (~> 2.2)
-      dragonfly (~> 0.8.2)
+      dragonfly (~> 0.8)
       haml (~> 3.0.25)
       httparty (~> 0.7.3)
       rack-cache
@@ -51,7 +52,7 @@ GEM
       ruby-debug-base19 (>= 0.11.19)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
-    sinatra (1.2.3)
+    sinatra (1.2.6)
       rack (~> 1.1)
       tilt (< 2.0, >= 1.2.2)
     tilt (1.3)
@@ -64,10 +65,10 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport (>= 2.0.0)
+  dragonfly (~> 0.9.0)
   haml (~> 3.0.25)
   httparty (~> 0.7.3)
   magickly (~> 1.1)
-  rack-cache
   rack-test
   rspec (~> 2.4)
   ruby-debug
