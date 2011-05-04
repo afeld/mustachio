@@ -10,3 +10,7 @@ group :development, :test do
   gem 'ruby-debug19', :platforms => :ruby_19
   gem 'ruby-debug', :platforms => :ruby_18
 end
+
+group :production do
+  gem 'newrelic_rpm', :require => false
+end

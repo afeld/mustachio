@@ -28,6 +28,7 @@ GEM
       rack-cache
       sinatra (~> 1.2.1)
     mime-types (1.16)
+    newrelic_rpm (2.14.1)
     rack (1.2.2)
     rack-cache (1.0.1)
       rack (>= 0.4)
@@ -60,6 +61,7 @@ DEPENDENCIES
   dragonfly (~> 0.9.0)
   face (= 0.0.4)
   magickly (~> 1.1)
+  newrelic_rpm
   ruby-debug
   ruby-debug19
   sinatra (~> 1.2.3)
