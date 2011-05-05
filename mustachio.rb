@@ -44,7 +44,7 @@ Magickly.dragonfly.configure do |c|
       ]
       affine_params_str = affine_params.map{|p| p.join(',') }.join(' ')
       
-      commands << "\\( +page #{MUSTACHE_FILENAME} +distort Affine '#{affine_params_str}' \\)"
+      commands << "\\( #{MUSTACHE_FILENAME} +distort Affine '#{affine_params_str}' \\)"
     end
     commands << "-flatten"
     
