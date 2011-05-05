@@ -44,9 +44,9 @@ Magickly.dragonfly.configure do |c|
       ]
       affine_params_str = affine_params.map{|p| p.join(',') }.join(' ')
       
-      commands << "\\( #{MUSTACHE_FILENAME} +distort Affine '#{affine_params_str}' \\)"
+      commands << "\\( +page #{MUSTACHE_FILENAME} +distort Affine '#{affine_params_str}' \\)"
     end
-    commands << "-layers merge"
+    commands << "-flatten"
     
     command_str = commands.join(' ')
     process :convert, command_str
