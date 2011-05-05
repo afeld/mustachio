@@ -10,11 +10,11 @@ FACE_POS_ATTRS = ['center', 'eye_left', 'eye_right', 'mouth_left', 'mouth_center
 
 Magickly.dragonfly.configure do |c|
   c.analyser.add :face_data do |temp_object|
-    Mustachio.face_client.faces_detect(:file => temp_object.file)['photos'].first
+    Mustachio.face_client.faces_detect(:file => temp_object.file, :attributes => 'none')['photos'].first
   end
   
   c.analyser.add :face_data_as_px do |temp_object|
-    data = Mustachio.face_client.faces_detect(:file => temp_object.file)['photos'].first # TODO use #face_data
+    data = Mustachio.face_client.faces_detect(:file => temp_object.file, :attributes => 'none')['photos'].first # TODO use #face_data
     FACE_POS_ATTRS.each do |pos_attr|
       data['tags'].map! do |face|
         face[pos_attr]['x'] *= (data['width'] / 100.0)
