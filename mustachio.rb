@@ -37,11 +37,11 @@ Magickly.dragonfly.configure do |c|
       # of the mustache is mapped to the nose, and the bottom-center
       # of the stache is mapped to the center of the mouth
       affine_params = [
-        [MUSTACHE_WIDTH/2, 0],
-        [face['nose']['x'], face['nose']['y']],
+        [MUSTACHE_WIDTH/2, 0], # top-center of stache
+        [face['nose']['x'], face['nose']['y']], # nose
         
-        [MUSTACHE_WIDTH/2, MUSTACHE_HEIGHT],
-        [face['mouth_center']['x'], face['mouth_center']['y']]
+        [MUSTACHE_WIDTH/2, MUSTACHE_HEIGHT], # bottom-center of stache
+        [face['mouth_center']['x'], face['mouth_center']['y']] # center of mouth
       ]
       affine_params_str = affine_params.map{|p| p.join(',') }.join(' ')
       
