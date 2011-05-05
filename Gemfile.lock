@@ -6,6 +6,7 @@ GEM
     archive-tar-minitar (0.5.2)
     columnize (0.3.2)
     crack (0.1.8)
+    diff-lcs (1.1.2)
     dragonfly (0.9.0)
       rack
       rack
@@ -15,6 +16,7 @@ GEM
     haml (3.0.25)
     httparty (0.7.7)
       crack (= 0.1.8)
+    imagesize (0.1.1)
     json (1.5.1)
     linecache (0.43)
     linecache19 (0.5.12)
@@ -25,15 +27,22 @@ GEM
       dragonfly (~> 0.8)
       haml (~> 3.0.25)
       httparty (~> 0.7.3)
-      rack-cache
       sinatra (~> 1.2.1)
     mime-types (1.16)
     newrelic_rpm (2.14.1)
     rack (1.2.2)
-    rack-cache (1.0.1)
-      rack (>= 0.4)
+    rack-test (0.6.0)
+      rack (>= 1.0)
     rest-client (1.6.1)
       mime-types (>= 1.16)
+    rspec (2.5.0)
+      rspec-core (~> 2.5.0)
+      rspec-expectations (~> 2.5.0)
+      rspec-mocks (~> 2.5.0)
+    rspec-core (2.5.1)
+    rspec-expectations (2.5.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.5.0)
     ruby-debug (0.10.4)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.4.0)
@@ -53,6 +62,10 @@ GEM
       rack (~> 1.1)
       tilt (< 2.0, >= 1.2.2)
     tilt (1.3)
+    vcr (1.9.0)
+    webmock (1.6.2)
+      addressable (>= 2.2.2)
+      crack (>= 0.1.7)
 
 PLATFORMS
   ruby
@@ -60,8 +73,13 @@ PLATFORMS
 DEPENDENCIES
   dragonfly (~> 0.9.0)
   face (= 0.0.4)
+  imagesize (~> 0.1)
   magickly (~> 1.1)
   newrelic_rpm
+  rack-test
+  rspec (~> 2.5)
   ruby-debug
   ruby-debug19
   sinatra (~> 1.2.3)
+  vcr (~> 1.9)
+  webmock (~> 1.6)
