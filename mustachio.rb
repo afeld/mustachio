@@ -59,6 +59,9 @@ class Mustachio < Sinatra::Base
     :api_secret => (ENV['MUSTACHIO_FACE_API_SECRET'] || raise("Please set MUSTACHIO_FACE_API_SECRET."))
   )
   
+  set :static, true
+  set :public, 'public'
+  
   configure :production do
     require 'newrelic_rpm' if ENV['NEW_RELIC_ID']
   end
