@@ -7,13 +7,29 @@ require 'ruby-debug'
 MUSTACHE_FILENAME = File.expand_path(File.join('public', 'images', 'mustache_03.png'))
 MUSTACHE_WIDTH = ImageSize.new(File.new(MUSTACHE_FILENAME)).get_width
 
+FACE_POS_ATTRS = ['center', 'eye_left', 'eye_right', 'mouth_left', 'mouth_center', 'mouth_right', 'nose']
+
 Magickly.dragonfly.configure do |c|
   c.analyser.add :face_data do |temp_object|
-    Mustachio.face_client.faces_detect(:file => temp_object.file)
+    Mustachio.face_client.faces_detect(:file => temp_object.file)['photos'].first
+  end
+  
+  c.analyser.add :face_data_as_px do |temp_object|
+    data = Mustachio.face_client.faces_detect(:file => temp_object.file)['photos'].first #@job.face_data
+    scale = Magickly.dragonfly.analyser.analyse(temp_object, :width) / data['width']
+    FACE_POS_ATTRS.each do |pos_attr|
+      data['tags'].map! do |face|
+        face[pos_attr]['x'] *= scale
+        face[pos_attr]['y'] *= scale
+        face
+      end
+    end
+    
+    data
   end
   
   c.job :mustachify do
-    photo_data = @job.face_data['photos'].first
+    photo_data = @job.face_data
     width = photo_data['width']
     
     commands = []
