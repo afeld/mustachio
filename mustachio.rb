@@ -15,7 +15,7 @@ Magickly.dragonfly.configure do |c|
   end
   
   c.analyser.add :face_data_as_px do |temp_object|
-    data = Mustachio.face_client.faces_detect(:file => temp_object.file)['photos'].first #@job.face_data
+    data = Mustachio.face_client.faces_detect(:file => temp_object.file)['photos'].first # TODO use #face_data
     FACE_POS_ATTRS.each do |pos_attr|
       data['tags'].map! do |face|
         face[pos_attr]['x'] *= (data['width'] / 100.0)
@@ -28,26 +28,25 @@ Magickly.dragonfly.configure do |c|
   end
   
   c.job :mustachify do
-    photo_data = @job.face_data
+    photo_data = @job.face_data_as_px
     width = photo_data['width']
     
     commands = []
     photo_data['tags'].each do |face|
-      mouth_width = (face['mouth_right']['x'] - face['mouth_left']['x']) * photo_data['width'] / 100
-      lip_height = (face['mouth_center']['y'] - face['nose']['y']) * photo_data['height'] / 100
+      mouth_width = face['mouth_right']['x'] - face['mouth_left']['x']
+      lip_height = face['mouth_center']['y'] - face['nose']['y']
       
       stache_width = mouth_width * (rand * 2 + 1.2)
       stache_scale = stache_width / MUSTACHE_WIDTH
-      debugger
+      
       angle = Math.atan(
         (face['mouth_center']['x'] - face['nose']['x']) /
         (face['mouth_center']['y'] - face['nose']['y'])
       ) / Math::PI * -360
       
-      x = (face['nose']['x'] * photo_data['width'] / 100) - (stache_width / 2)
-      y = face['nose']['y'] * photo_data['height'] / 100 #+ (lip_height * 0.2)
+      x = face['nose']['x'] - (stache_width / 2)
+      y = face['nose']['y'] #+ (lip_height * 0.2)
       
-      debugger
       commands << "\\( \\( #{MUSTACHE_FILENAME} -geometry +#{x.to_i}+#{y.to_i} \\) +distort SRT '0,0 #{stache_scale} #{angle}' \\) -composite"
     end
     
