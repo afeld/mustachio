@@ -77,7 +77,7 @@ DEPENDENCIES
   imagesize (~> 0.1)
   magickly (~> 1.1)
   rack-test
-  rspec (~> 2.4)
+  rspec (~> 2.5)
   ruby-debug
   ruby-debug19
   sinatra (~> 1.2.3)

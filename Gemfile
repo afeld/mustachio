@@ -5,12 +5,12 @@ gem 'dragonfly', '~> 0.9.0'
 gem 'magickly', '~> 1.1'
 
 gem 'face', '0.0.4'
-gem 'imagesize', '~> 0.1'
+gem 'imagesize', '~> 0.1', :require => 'image_size'
 
 group :development, :test do
-  gem 'rack-test'
-  gem 'rspec', '~> 2.4'
-  gem 'webmock', '~> 1.6'
-  gem 'ruby-debug19', :platforms => :ruby_19
+  gem 'rack-test', :require => 'rack/test'
+  gem 'rspec', '~> 2.5'
+  gem 'webmock', '~> 1.6', :require => 'webmock/rspec'
+  gem 'ruby-debug19', :require => 'ruby-debug', :platforms => :ruby_19
   gem 'ruby-debug', :platforms => :ruby_18
 end
