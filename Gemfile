@@ -11,6 +11,8 @@ group :development, :test do
   gem 'rack-test', :require => 'rack/test'
   gem 'rspec', '~> 2.5'
   gem 'webmock', '~> 1.6', :require => 'webmock/rspec'
+  gem 'vcr', '~> 1.9'
+  
   gem 'ruby-debug19', :require => 'ruby-debug', :platforms => :ruby_19
   gem 'ruby-debug', :platforms => :ruby_18
 end
