@@ -16,11 +16,10 @@ Magickly.dragonfly.configure do |c|
   
   c.analyser.add :face_data_as_px do |temp_object|
     data = Mustachio.face_client.faces_detect(:file => temp_object.file)['photos'].first #@job.face_data
-    scale = Magickly.dragonfly.analyser.analyse(temp_object, :width) / data['width']
     FACE_POS_ATTRS.each do |pos_attr|
       data['tags'].map! do |face|
-        face[pos_attr]['x'] *= scale
-        face[pos_attr]['y'] *= scale
+        face[pos_attr]['x'] *= (data['width'] / 100.0)
+        face[pos_attr]['y'] *= (data['height'] / 100.0)
         face
       end
     end
