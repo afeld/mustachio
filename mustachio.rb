@@ -9,7 +9,7 @@ MUSTACHE_WIDTH = ImageSize.new(File.new(MUSTACHE_FILENAME)).get_width
 
 Magickly.dragonfly.configure do |c|
   c.analyser.add :face_data do |temp_object|
-    Mustachio.face_client.faces_detect(:file => temp_object.file, :detector => 'Aggressive')
+    Mustachio.face_client.faces_detect(:file => temp_object.file)
   end
   
   c.job :mustachify do
