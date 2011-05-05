@@ -2,12 +2,16 @@
 require 'spec_helper'
 
 describe "#face_data_as_px" do
-  it "should return a hash" do
+  def dubya_photo
     image_url = "http://www.foo.com/imagemagick.png"
-    image_path = File.join(File.dirname(__FILE__), '..', 'support', 'george-bush-picture-43-716290.jpeg')
+    image_path = File.join(File.dirname(__FILE__), '..', 'support', 'dubya.jpeg')
     stub_request(:get, image_url).to_return(:body => File.new(image_path))
     
-    image = Magickly.dragonfly.fetch(image_url)
+    Magickly.dragonfly.fetch(image_url)
+  end
+  
+  it "should return a hash" do
+    image = dubya_photo
     
     VCR.use_cassette('dubya') do
       image.face_data_as_px.should be_kind_of Hash
