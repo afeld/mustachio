@@ -73,6 +73,20 @@ class Mustachio < Sinatra::Base
   end
   
   get '/' do
-    'Hello world!'
+    src = params[:src]
+    if src
+      image = Magickly.process_src params[:src], :mustachify => true
+      image.to_response(env)
+    else
+      <<-END
+      <html>
+      <head></head>
+      <body>
+      <img src="http://mustachio.heroku.com/magickly/?mustachify=true&src=http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg"/>
+      <h1>http://#{env['HTTP_HOST']}/?src=<em>YOUR_IMAGE_URL</em></h1>
+      </body>
+      </html>
+      END
+    end
   end
 end
