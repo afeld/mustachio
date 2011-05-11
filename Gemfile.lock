@@ -73,6 +73,7 @@ PLATFORMS
 DEPENDENCIES
   dragonfly (~> 0.9.0)
   face (= 0.0.4)
+  haml
   imagesize (~> 0.1)
   magickly (~> 1.1)
   newrelic_rpm

@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'sinatra', '~> 1.2.3', :require => 'sinatra/base'
 gem 'dragonfly', '~> 0.9.0'
 gem 'magickly', '~> 1.1'
+gem 'haml'
 
 gem 'face', '0.0.4'
 gem 'imagesize', '~> 0.1', :require => 'image_size'
