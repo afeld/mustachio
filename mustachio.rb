@@ -6,7 +6,9 @@ require 'image_size'
 MUSTACHE = {
   :filename => File.expand_path(File.join('public', 'images', 'mustache_03.png')),
   :width => nil,
-  :height => nil
+  :height => nil,
+  :top_offset => -5.0,
+  :bottom_offset => -20.0
 }
 MUSTACHE[:width], MUSTACHE[:height] = ImageSize.new(File.new(MUSTACHE[:filename])).get_size
 
@@ -46,11 +48,11 @@ Magickly.dragonfly.configure do |c|
       # of the mustache is mapped to the nose, and the bottom-center
       # of the stache is mapped to the center of the mouth
       affine_params = [
-        [MUSTACHE[:width]/2, 0], # top-center of stache
-        [face['nose']['x'], face['nose']['y']], # nose
+        [ MUSTACHE[:width]/2, MUSTACHE[:top_offset] ], # top-center of stache
+        [ face['nose']['x'], face['nose']['y'] ], # nose
         
-        [MUSTACHE[:width]/2, MUSTACHE[:height]], # bottom-center of stache
-        [face['mouth_center']['x'], face['mouth_center']['y']] # center of mouth
+        [ MUSTACHE[:width]/2, MUSTACHE[:height] + MUSTACHE[:bottom_offset] ], # bottom-center of stache
+        [ face['mouth_center']['x'], face['mouth_center']['y'] ] # center of mouth
       ]
       affine_params_str = affine_params.map{|p| p.join(',') }.join(' ')
       
