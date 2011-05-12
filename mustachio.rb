@@ -8,7 +8,7 @@ MUSTACHE = {
   :width => nil,
   :height => nil,
   :top_offset => -5.0,
-  :bottom_offset => -20.0
+  :bottom_offset => -15.0
 }
 MUSTACHE[:width], MUSTACHE[:height] = ImageSize.new(File.new(MUSTACHE[:filename])).get_size
 
@@ -90,6 +90,7 @@ class Mustachio < Sinatra::Base
       image = Magickly.process_src params[:src], :mustachify => true
       image.to_response(env)
     else
+      @site = Addressable::URI.parse(request.url).site
       haml :index
     end
   end

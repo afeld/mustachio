@@ -71,6 +71,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable (~> 2.2.4)
   dragonfly (~> 0.9.0)
   face (= 0.0.4)
   haml
