@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
     "bookmarklet.js",
     "config.ru",
     "lib/mustachio.rb",
+    "mustachio.gemspec",
     "public/favicon.ico",
     "public/images/dubya.jpeg",
     "public/images/guy_hecker.jpeg",
