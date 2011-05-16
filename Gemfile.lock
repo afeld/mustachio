@@ -13,10 +13,15 @@ GEM
     face (0.0.4)
       json (>= 1.4.6)
       rest-client (>= 1.6.1)
+    git (1.2.5)
     haml (3.0.25)
     httparty (0.7.7)
       crack (= 0.1.8)
     imagesize (0.1.1)
+    jeweler (1.6.0)
+      bundler (~> 1.0.0)
+      git (>= 1.2.5)
+      rake
     json (1.5.1)
     linecache (0.43)
     linecache19 (0.5.12)
@@ -33,6 +38,7 @@ GEM
     rack (1.2.2)
     rack-test (0.6.0)
       rack (>= 1.0)
+    rake (0.8.7)
     rest-client (1.6.1)
       mime-types (>= 1.16)
     rspec (2.5.0)
@@ -76,6 +82,7 @@ DEPENDENCIES
   face (= 0.0.4)
   haml
   imagesize (~> 0.1)
+  jeweler (~> 1.6)
   magickly (~> 1.1)
   newrelic_rpm
   rack-test

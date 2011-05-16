@@ -9,6 +9,10 @@ gem 'haml'
 gem 'face', '0.0.4'
 gem 'imagesize', '~> 0.1', :require => 'image_size'
 
+group :development do
+  gem 'jeweler', '~> 1.6'
+end
+
 group :development, :test do
   gem 'rack-test', :require => 'rack/test'
   gem 'rspec', '~> 2.5'

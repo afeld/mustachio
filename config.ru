@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
-require './mustachio'
+require File.join(File.dirname(__FILE__), 'lib', 'mustachio')
 
 map '/' do
   run Mustachio
