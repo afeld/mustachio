@@ -1,0 +1,68 @@
+!!!
+%html
+  %head
+    %title Face.com Developer Challenge Submission
+    %link{:href => 'http://fonts.googleapis.com/css?family=Bentham|IM+Fell+English+SC|OFL+Sorts+Mill+Goudy+TT|Oswald|Ultra', :rel=> 'stylesheet', :type => 'text/css'}
+    :css
+      body {
+        background-color: #E3CBA8;
+        color: #4F4841;
+        font-family: 'OFL Sorts Mill Goudy TT', arial, serif;
+      }
+      .wrapper {
+        border: 2px dotted #4F4841;
+        padding: 20px;
+        width: 600px;
+        margin: auto;
+      }
+      h1 {
+        text-align: center;
+        font-size: 6em;
+        font-family: 'Oswald', arial, serif;
+      }
+      h2 {
+        text-align: center;
+        font-family: 'Ultra', arial, serif;
+      }
+      body h1:first-child {
+        margin: 0;
+      }
+      p {
+        font-style: italic;
+      }
+      hr {
+        width: 15%;
+        color: #4F4841;
+        border: 1px solid #4F4841;
+      }
+      .im-fell {
+        font-style: normal;
+        font-family: 'IM Fell English SC', arial, serif;
+        font-size: 1.8em;
+      }
+      .bentham {
+        font-family: 'Bentham', arial, serif;
+        font-style: normal;
+      }
+      #guy-hecker {
+        display: block;
+        margin: auto;
+        width: 204px;
+      }
+  %body
+    .wrapper
+      %h1 NOTICE
+      %p
+        In the entire history of photography, countless photographs of friends and loved ones have remained common and humdrum.  We, the people, say:
+      %h2 This will not stand.
+      %p
+        On this, the fifteenth day of May, 2011: I, Aidan Feldman, declare my intent to build the mobile application by the name of "mustachio", with intent to settle this score.
+      %p
+        %span.im-fell In said application,
+        upon the taking of a digital photograph, all faces are detected and mustaches are applied forthwith, endowing instant poise and panache to otherwise colloquial subjects, all before one can proclaim "<a href='http://en.wikipedia.org/wiki/Ambrose_Burnside'>Ambrose Burnside</a>".  These properly whiskered photos are then suitable to be shared with acquaintances and cohorts across the globe, which can then be accomplished from within the comfort of "mustachio".
+      %hr
+      .separator
+      %p.bentham
+        An application by the same name has been constructed for the world wide web - see 
+        %a{:href => 'https://github.com/afeld/mustachio'} https://github.com/afeld/mustachio
+      %img#guy-hecker{:src => '/images/guy_hecker.jpeg', :alt => ''}
