@@ -1,10 +1,11 @@
 require 'sinatra/base'
 require 'magickly'
 require 'image_size'
+require 'face'
 
 # thanks to http://therantsandraves.com/?p=602 for the 'staches
 MUSTACHE = {
-  :filename => File.expand_path(File.join('public', 'images', 'mustache_03.png')),
+  :filename => File.expand_path(File.join(File.join(File.dirname(__FILE__), '..', 'public', 'images', 'mustache_03.png'))),
   :width => nil,
   :height => nil,
   :top_offset => -5.0,
