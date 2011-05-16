@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/afeld/mustachio"
   gem.license = "MIT"
   gem.summary = %Q{automatic mustachifying of any image}
-  gem.description = %Q{automatic mustachifying of any image}
+  gem.description = %Q{Adds a 'mustachify' shortcut to magickly.}
   gem.email = "aidan.feldman@gmail.com"
   gem.authors = ["Aidan Feldman"]
   # dependencies defined in Gemfile
