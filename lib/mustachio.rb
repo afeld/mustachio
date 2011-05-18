@@ -48,9 +48,9 @@ Magickly.dragonfly.configure do |c|
         [ mustache['width']/2, mustache['height'] + mustache['bottom_offset'] ], # bottom-center of stache
         [ face['mouth_center']['x'], face['mouth_center']['y'] ] # center of mouth
       ]
-      affine_params_str = affine_params.map{|p| p.join(',') }.join(' ')
+      affine_params_str = affine_params.flatten.map{|e| e.to_i }.join(',')
       
-      commands << "\\( #{mustache['file_path']} +distort Affine '#{affine_params_str}' \\)"
+      commands << "\\( #{mustache['file_path']} +distort Affine #{affine_params_str} \\)"
     end
     commands << "-flatten"
     
