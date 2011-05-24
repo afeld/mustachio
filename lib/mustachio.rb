@@ -32,7 +32,7 @@ Magickly.dragonfly.configure do |c|
     photo_data = @job.face_data_as_px
     width = photo_data['width']
     
-    commands = ['-virtual-pixel transparent']
+    commands = []
     photo_data['tags'].each do |face|
       # use numbered stache, if provided
       stache_num = stache_num_str.to_s == 'true' ? rand(Mustachio.mustaches.size) : stache_num_str.to_i
@@ -60,7 +60,7 @@ Magickly.dragonfly.configure do |c|
       ]
       srt_params_str = srt_params.join(' ')
       
-      commands << "\\( #{mustache['file_path']} +distort SRT '#{srt_params_str}' \\)"
+      commands << "\\( -virtual-pixel transparent #{mustache['file_path']} +distort SRT '#{srt_params_str}' \\)"
     end
     commands << "-flatten"
     
