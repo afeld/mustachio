@@ -2,5 +2,4 @@
 
 -
   filename: mustache_03.png
-  top_offset: -5.0
-  bottom_offset: -15.0
+  vert_offset: -15

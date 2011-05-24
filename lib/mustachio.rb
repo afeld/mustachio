@@ -40,14 +40,13 @@ Magickly.dragonfly.configure do |c|
       stache_num = 0 # TODO make this random
       mustache = Mustachio.mustaches[stache_num]
       
-      # perform affine transform, such that the top-center
-      # of the mustache is mapped to the nose, and the bottom-center
-      # of the stache is mapped to the center of the mouth
+      # perform transform such that the mustache is the height
+      # of the upper lip, and the bottom-center of the stache
+      # is mapped to the center of the mouth
       rotation = Math.atan(
         ( face['mouth_right']['y'] - face['mouth_left']['y'] ).to_f /
         ( face['mouth_right']['x'] - face['mouth_left']['x'] ).to_f
       ) / Math::PI * 180.0
-      
       desired_height = Math.sqrt(
         ( face['nose']['x'] - face['mouth_center']['x'] ).to_f**2 +
         ( face['nose']['y'] - face['mouth_center']['y'] ).to_f**2
@@ -55,10 +54,10 @@ Magickly.dragonfly.configure do |c|
       scale = desired_height / mustache['height']
       
       srt_params = [
-        [ mustache['width']/2.0, mustache['height'] ].map{|e| e.to_i }.join(','), # old position
+        [ mustache['width'] / 2.0, mustache['height'] + mustache['vert_offset'] ].map{|e| e.to_i }.join(','), # bottom-center of stache
         scale, # scale
         rotation, # rotate
-        [ face['mouth_center']['x'], face['mouth_center']['y'] ].map{|e| e.to_i }.join(',') # now position
+        [ face['mouth_center']['x'], face['mouth_center']['y'] ].map{|e| e.to_i }.join(',') # middle of mouth
       ]
       srt_params_str = srt_params.join(' ')
       
@@ -98,6 +97,8 @@ class Mustachio < Sinatra::Base
       
       staches = YAML.load(File.read(File.join(File.dirname(__FILE__), '..', 'config', 'staches.yml')))
       staches.map! do |stache|
+        stache['vert_offset'] ||= 0
+        
         stache['file_path'] = File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'staches', stache['filename']))
         stache['width'], stache['height'] = ImageSize.new(File.new(stache['file_path'])).get_size
         stache
