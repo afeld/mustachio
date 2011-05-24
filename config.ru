@@ -2,10 +2,10 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
-require File.join(File.dirname(__FILE__), 'lib', 'mustachio')
+require File.join(File.dirname(__FILE__), 'lib', 'mustachio', 'app')
 
 map '/' do
-  run Mustachio
+  run Mustachio::App
 end
 
 map '/magickly' do

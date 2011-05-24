@@ -1,9 +1,6 @@
-require 'sinatra/base'
 require 'magickly'
 require 'image_size'
 require 'face'
-
-# thanks to http://therantsandraves.com/?p=602 for the 'staches
 
 Magickly.dragonfly.configure do |c|
   c.log_commands = true
@@ -72,15 +69,8 @@ Magickly.dragonfly.configure do |c|
   end
 end
 
-class Mustachio < Sinatra::Base
+module Mustachio
   FACE_POS_ATTRS = ['center', 'eye_left', 'eye_right', 'mouth_left', 'mouth_center', 'mouth_right', 'nose']
-  
-  set :static, true
-  set :public, 'public'
-  
-  configure :production do
-    require 'newrelic_rpm' if ENV['NEW_RELIC_ID']
-  end
   
   class << self
     def face_client
@@ -108,34 +98,6 @@ class Mustachio < Sinatra::Base
       end
       @@mustaches = staches
     end
-  end
-  
-  get '/' do
-    src = params[:src]
-    if src
-      image = Magickly.process_src params[:src], :mustachify => true
-      image.to_response(env)
-    else
-      @site = Addressable::URI.parse(request.url).site
-      haml :index
-    end
-  end
-  
-  get %r{/(\d+)} do |stache_num|
-    image = Magickly.process_src params[:src], :mustachify => stache_num
-    image.to_response(env)
-  end
-  
-  get '/gallery' do
-    haml :gallery
-  end
-  
-  get '/test' do
-    haml :test
-  end
-  
-  get '/face_api_dev_challenge' do
-    haml :face_api_dev_challenge
   end
   
   
