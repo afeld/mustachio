@@ -1,0 +1,10 @@
+!!!
+%html
+  %head
+    %title mustache gallery - mustachio
+  %body
+    %ol{ :start => 0 }
+      - Mustachio.mustaches.each_with_index do |mustache, i|
+        %li
+          %a{ :href => "/#{i}?src=http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg" }
+            %img{ :src => "/images/staches/#{mustache['filename']}", :height => 80 }

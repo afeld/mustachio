@@ -126,6 +126,10 @@ class Mustachio < Sinatra::Base
     image.to_response(env)
   end
   
+  get '/gallery' do
+    haml :gallery
+  end
+  
   get '/test' do
     haml :test
   end
