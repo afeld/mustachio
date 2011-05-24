@@ -6,6 +6,8 @@ require 'face'
 # thanks to http://therantsandraves.com/?p=602 for the 'staches
 
 Magickly.dragonfly.configure do |c|
+  c.log_commands = true
+  
   c.analyser.add :face_data do |temp_object|
     Mustachio.face_client.faces_detect(:file => temp_object.file, :attributes => 'none')['photos'].first
   end
@@ -41,16 +43,26 @@ Magickly.dragonfly.configure do |c|
       # perform affine transform, such that the top-center
       # of the mustache is mapped to the nose, and the bottom-center
       # of the stache is mapped to the center of the mouth
-      affine_params = [
-        [ mustache['width']/2, mustache['top_offset'] ], # top-center of stache
-        [ face['nose']['x'], face['nose']['y'] ], # nose
-        
-        [ mustache['width']/2, mustache['height'] + mustache['bottom_offset'] ], # bottom-center of stache
-        [ face['mouth_center']['x'], face['mouth_center']['y'] ] # center of mouth
-      ]
-      affine_params_str = affine_params.flatten.map{|e| e.to_i }.join(',')
+      rotation = Math.atan(
+        ( face['mouth_right']['y'] - face['mouth_left']['y'] ).to_f /
+        ( face['mouth_right']['x'] - face['mouth_left']['x'] ).to_f
+      ) / Math::PI * 180.0
       
-      commands << "\\( #{mustache['file_path']} +distort Affine #{affine_params_str} \\)"
+      desired_height = Math.sqrt(
+        ( face['nose']['x'] - face['mouth_center']['x'] ).to_f**2 +
+        ( face['nose']['y'] - face['mouth_center']['y'] ).to_f**2
+      )
+      scale = desired_height / mustache['height']
+      
+      srt_params = [
+        [ mustache['width']/2.0, mustache['height'] ].map{|e| e.to_i }.join(','), # old position
+        scale, # scale
+        rotation, # rotate
+        [ face['mouth_center']['x'], face['mouth_center']['y'] ].map{|e| e.to_i }.join(',') # now position
+      ]
+      srt_params_str = srt_params.join(' ')
+      
+      commands << "\\( #{mustache['file_path']} +distort SRT '#{srt_params_str}' \\)"
     end
     commands << "-flatten"
     
