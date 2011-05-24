@@ -31,13 +31,14 @@ Magickly.dragonfly.configure do |c|
     data
   end
   
-  c.job :mustachify do
+  c.job :mustachify do |stache_num_str|
     photo_data = @job.face_data_as_px
     width = photo_data['width']
     
-    commands = []
+    commands = ['-virtual-pixel transparent']
     photo_data['tags'].each do |face|
-      stache_num = 0 # TODO make this random
+      # use numbered stache, if provided
+      stache_num = stache_num_str.to_s == 'true' ? rand(Mustachio.mustaches.size) : stache_num_str.to_i
       mustache = Mustachio.mustaches[stache_num]
       
       # perform transform such that the mustache is the height
@@ -51,10 +52,11 @@ Magickly.dragonfly.configure do |c|
         ( face['nose']['x'] - face['mouth_center']['x'] ).to_f**2 +
         ( face['nose']['y'] - face['mouth_center']['y'] ).to_f**2
       )
-      scale = desired_height / mustache['height']
+      mouth_intersect = mustache['height'] - mustache['mouth_overlap']
+      scale = desired_height / mouth_intersect
       
       srt_params = [
-        [ mustache['width'] / 2.0, mustache['height'] + mustache['vert_offset'] ].map{|e| e.to_i }.join(','), # bottom-center of stache
+        [ mustache['width'] / 2.0, mouth_intersect - mustache['vert_offset'] ].map{|e| e.to_i }.join(','), # bottom-center of stache
         scale, # scale
         rotation, # rotate
         [ face['mouth_center']['x'], face['mouth_center']['y'] ].map{|e| e.to_i }.join(',') # middle of mouth
@@ -98,6 +100,7 @@ class Mustachio < Sinatra::Base
       staches = YAML.load(File.read(File.join(File.dirname(__FILE__), '..', 'config', 'staches.yml')))
       staches.map! do |stache|
         stache['vert_offset'] ||= 0
+        stache['mouth_overlap'] ||= 0
         
         stache['file_path'] = File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'staches', stache['filename']))
         stache['width'], stache['height'] = ImageSize.new(File.new(stache['file_path'])).get_size
@@ -116,6 +119,11 @@ class Mustachio < Sinatra::Base
       @site = Addressable::URI.parse(request.url).site
       haml :index
     end
+  end
+  
+  get %r{/(\d+)} do |stache_num|
+    image = Magickly.process_src params[:src], :mustachify => stache_num
+    image.to_response(env)
   end
   
   get '/test' do
