@@ -105,6 +105,10 @@ class Mustachio < Sinatra::Base
     end
   end
   
+  get '/test' do
+    haml :test
+  end
+  
   get '/face_api_dev_challenge' do
     haml :face_api_dev_challenge
   end
