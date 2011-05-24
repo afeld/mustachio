@@ -3,6 +3,8 @@ require 'sinatra/base'
 
 module Mustachio
   class App < Sinatra::Base
+    DEMO_IMAGE = 'http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg'
+    
     set :static, true
     set :public, 'public'
     
@@ -11,20 +13,17 @@ module Mustachio
     end
     
     
-    get '/' do
+    get %r{^/(\d+)?$} do |stache_num|
       src = params[:src]
       if src
-        image = Magickly.process_src params[:src], :mustachify => true
+        # use the specified stache, otherwise fall back to random
+        image = Magickly.process_src params[:src], :mustachify => (stache_num || true)
         image.to_response(env)
       else
+        @stache_num = stache_num
         @site = Addressable::URI.parse(request.url).site
         haml :index
       end
-    end
-    
-    get %r{/(\d+)} do |stache_num|
-      image = Magickly.process_src params[:src], :mustachify => stache_num
-      image.to_response(env)
     end
     
     get '/gallery' do
