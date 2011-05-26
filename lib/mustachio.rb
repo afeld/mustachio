@@ -102,7 +102,9 @@ module Mustachio
         stache['mouth_overlap'] ||= 0
         
         stache['file_path'] = File.expand_path(File.join(File.dirname(__FILE__), '..', 'public', 'images', 'staches', stache['filename']))
-        stache['width'], stache['height'] = ImageSize.new(File.new(stache['file_path'])).get_size
+        unless stache['width'] && stache['height']
+          stache['width'], stache['height'] = ImageSize.new(File.new(stache['file_path'])).get_size
+        end
         stache
       end
       @@mustaches = staches
