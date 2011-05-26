@@ -12,19 +12,23 @@ Magickly.dragonfly.configure do |c|
   c.analyser.add :face_data_as_px do |temp_object|
     data = Mustachio.face_client.faces_detect(:file => temp_object.file, :attributes => 'none')['photos'].first # TODO use #face_data
     
-    data['tags'].map! do |face|
-      Mustachio::FACE_POS_ATTRS.each do |pos_attr|
-        if face[pos_attr].nil?
-          puts "WARN: missing position attribute '#{pos_attr}'"
-        else
+    new_tags = []
+    data['tags'].map do |face|
+      has_all_attrs = Mustachio::FACE_POS_ATTRS.all? do |pos_attr|
+        if face[pos_attr]
           face[pos_attr]['x'] *= (data['width'] / 100.0)
           face[pos_attr]['y'] *= (data['height'] / 100.0)
+          true
+        else
+          # face attribute missing
+          false
         end
       end
       
-      face
+      new_tags << face if has_all_attrs
     end
     
+    data['tags'] = new_tags
     data
   end
   
