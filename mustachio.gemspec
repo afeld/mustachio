@@ -5,10 +5,10 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mustachio}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Aidan Feldman"]
+  s.authors = [%q{Aidan Feldman}]
   s.date = %q{2011-05-26}
   s.description = %q{Adds a 'mustachify' shortcut to magickly.}
   s.email = %q{aidan.feldman@gmail.com}
@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
     "public/images/guy_hecker.jpeg",
     "public/images/staches/colonel_mustard.png",
     "public/images/staches/mustache_03.png",
+    "public/images/staches/mustache_03.svg",
     "public/images/staches/mustache_07.png",
     "spec/fixtures/vcr_cassettes/big_obama.yml",
     "spec/fixtures/vcr_cassettes/dubya.yml",
@@ -52,9 +53,9 @@ Gem::Specification.new do |s|
     "views/test.haml"
   ]
   s.homepage = %q{http://github.com/afeld/mustachio}
-  s.licenses = ["MIT"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
+  s.licenses = [%q{MIT}]
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.4}
   s.summary = %q{automatic mustachifying of any image}
 
   if s.respond_to? :specification_version then
@@ -68,6 +69,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<haml>, [">= 0"])
       s.add_runtime_dependency(%q<face>, ["= 0.0.4"])
       s.add_runtime_dependency(%q<imagesize>, ["~> 0.1"])
+      s.add_development_dependency(%q<rake>, ["~> 0.8.7"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6"])
       s.add_development_dependency(%q<rack-test>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.5"])
@@ -83,6 +85,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<haml>, [">= 0"])
       s.add_dependency(%q<face>, ["= 0.0.4"])
       s.add_dependency(%q<imagesize>, ["~> 0.1"])
+      s.add_dependency(%q<rake>, ["~> 0.8.7"])
       s.add_dependency(%q<jeweler>, ["~> 1.6"])
       s.add_dependency(%q<rack-test>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.5"])
@@ -99,6 +102,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<haml>, [">= 0"])
     s.add_dependency(%q<face>, ["= 0.0.4"])
     s.add_dependency(%q<imagesize>, ["~> 0.1"])
+    s.add_dependency(%q<rake>, ["~> 0.8.7"])
     s.add_dependency(%q<jeweler>, ["~> 1.6"])
     s.add_dependency(%q<rack-test>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.5"])
