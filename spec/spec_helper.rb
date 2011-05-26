@@ -5,11 +5,11 @@ require 'bundler'
 Bundler.require
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-require 'mustachio'
+require 'mustachio/app'
 require 'webmock/rspec'
 require 'vcr'
 
-Mustachio.set :environment, :test
+Mustachio::App.set :environment, :test
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
