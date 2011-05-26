@@ -10,6 +10,8 @@ gem 'face', '0.0.4'
 gem 'imagesize', '~> 0.1', :require => 'image_size'
 
 group :development do
+  # rake 0.9.0 doesn't work with Jeweler 1.6.0
+  gem 'rake', '~> 0.8.7'
   gem 'jeweler', '~> 1.6'
 end
 
