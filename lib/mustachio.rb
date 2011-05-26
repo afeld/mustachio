@@ -28,14 +28,23 @@ Magickly.dragonfly.configure do |c|
     data
   end
   
-  c.job :mustachify do |stache_num_str|
+  c.job :mustachify do |stache_num_param|
     photo_data = @job.face_data_as_px
     width = photo_data['width']
     
     commands = ['-virtual-pixel transparent']
     photo_data['tags'].each do |face|
-      # use numbered stache, if provided
-      stache_num = stache_num_str.to_s == 'true' ? rand(Mustachio.mustaches.size) : stache_num_str.to_i
+      stache_num = case stache_num_param
+        when true
+          0
+        when 'true'
+          0
+        when 'rand'
+          rand(Mustachio.mustaches.size)
+        else
+          stache_num_param.to_i
+      end
+      
       mustache = Mustachio.mustaches[stache_num]
       
       # perform transform such that the mustache is the height

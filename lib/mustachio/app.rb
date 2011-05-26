@@ -13,7 +13,7 @@ module Mustachio
     end
     
     
-    get %r{^/(\d+)?$} do |stache_num|
+    get %r{^/(\d+|rand)?$} do |stache_num|
       src = params[:src]
       if src
         # use the specified stache, otherwise fall back to random
