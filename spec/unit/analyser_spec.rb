@@ -49,4 +49,15 @@ describe "analysers" do
       big_eye_x.should be_within(5.0).of(small_eye_x * scale)
     end
   end
+  
+  describe "#face_span" do
+    it "should return appropriate boundaries" do
+      image = get_photo
+      span = stub_face_data(image){|img| img.face_span }
+      span.should be_a Hash
+      span.size.should eq 4
+      span[:top].should < span[:bottom]
+      span[:left].should < span[:right]
+    end
+  end
 end

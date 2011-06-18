@@ -17,8 +17,7 @@ Magickly.dragonfly.configure do |c|
           face[pos_attr]['x'] *= (data['width'] / 100.0)
           face[pos_attr]['y'] *= (data['height'] / 100.0)
           true
-        else
-          # face attribute missing
+        else # face attribute missing
           false
         end
       end
@@ -29,6 +28,23 @@ Magickly.dragonfly.configure do |c|
     data['tags'] = new_tags
     data
   end
+  
+  c.analyser.add :face_span do |temp_object|
+    face_data = Magickly.dragonfly.analyser.functions[:face_data_as_px].first.call(temp_object)
+    faces = face_data['tags']
+    
+    left_face, right_face = faces.minmax_by{|face| face['center']['x'] }
+    top_face, bottom_face = faces.minmax_by{|face| face['center']['y'] }
+    
+    {
+      :top => top_face['eye_left']['y'],
+      :bottom => bottom_face['mouth_center']['y'],
+      :right => right_face['eye_right']['x'],
+      :left => left_face['eye_left']['x']
+    }
+  end
+  
+  
   
   c.job :mustachify do |stache_num_param|
     photo_data = @job.face_data_as_px
