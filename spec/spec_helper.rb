@@ -30,3 +30,12 @@ RSpec.configure do |config|
   # config.mock_with :rr
   config.mock_with :rspec
 end
+
+
+def get_photo(filename='dubya.jpeg')
+  image_url = "http://www.foo.com/#{filename}"
+  image_path = File.join(File.dirname(__FILE__), 'support', filename)
+  stub_request(:get, image_url).to_return(:body => File.new(image_path))
+  
+  Magickly.dragonfly.fetch(image_url)
+end

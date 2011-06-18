@@ -1,15 +1,7 @@
 # P.S. I'm pretty sure it's spelled "analyZer", but I'm staying consistent w/ Dragonfly
 require 'spec_helper'
 
-describe "retrieving face data" do
-  def get_photo(filename='dubya.jpeg')
-    image_url = "http://www.foo.com/#{filename}"
-    image_path = File.join(File.dirname(__FILE__), '..', 'support', filename)
-    stub_request(:get, image_url).to_return(:body => File.new(image_path))
-    
-    Magickly.dragonfly.fetch(image_url)
-  end
-  
+describe "analysers" do
   def face_data(filename='dubya.jpeg')
     photo = get_photo(filename)
     data = nil
@@ -51,9 +43,7 @@ describe "retrieving face data" do
       image = get_photo
       image.height.should eq 300
       
-      VCR.use_cassette('dubya') do
-        image.face_data_as_px['height'].should eq 300
-      end
+      face_data_as_px['height'].should eq 300
     end
     
     it "should scale the detection areas proportionally for large photos" do
