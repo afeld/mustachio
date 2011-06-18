@@ -51,8 +51,8 @@ Magickly.dragonfly.configure do |c|
       :left => left,
       :width => width,
       :height => height,
-      :center_x => width / 2,
-      :center_y => height / 2
+      :center_x => (left + right) / 2,
+      :center_y => (top + bottom) / 2
     }
   end
   
@@ -108,10 +108,22 @@ Magickly.dragonfly.configure do |c|
   end
   
   c.job :crop_to_faces do |geometry|
+    thumb_width, thumb_height = geometry.split('x')
     # raise ArgumentError
+    
     span = @job.face_span
     puts span.inspect
-    process :convert, "-extent #{span[:width]}x#{span[:height]}+#{span[:left]}+#{span[:top]}"
-    process :thumb, geometry
+    scale_x = thumb_width.to_f / span[:width]
+    scale_y = thumb_height.to_f / span[:height]
+    scale = [scale_x, scale_y].min
+    
+    # if thumb larger than span
+    # center span and crop
+    # else
+    # resize image so span is smaller than thumb, then crop
+    offset_x = (span[:left] * scale).to_i
+    offset_y = (span[:top] * scale).to_i
+    
+    process :convert, "-resize #{(scale * 100).to_i}% -extent #{geometry}+#{offset_x}+#{offset_y}"
   end
 end
