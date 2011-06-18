@@ -55,7 +55,6 @@ describe "analysers" do
       image = get_photo
       span = stub_face_data(image){|img| img.face_span }
       span.should be_a Hash
-      span.size.should eq 4
       span[:top].should < span[:bottom]
       span[:left].should < span[:right]
     end

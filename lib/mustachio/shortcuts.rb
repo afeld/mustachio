@@ -36,11 +36,23 @@ Magickly.dragonfly.configure do |c|
     left_face, right_face = faces.minmax_by{|face| face['center']['x'] }
     top_face, bottom_face = faces.minmax_by{|face| face['center']['y'] }
     
+    top = top_face['eye_left']['y']
+    bottom = bottom_face['mouth_center']['y']
+    right = right_face['eye_right']['x']
+    left = left_face['eye_left']['x']
+    width = right - left
+    height = bottom - top
+    
+    # TODO it needs some padding
     {
-      :top => top_face['eye_left']['y'],
-      :bottom => bottom_face['mouth_center']['y'],
-      :right => right_face['eye_right']['x'],
-      :left => left_face['eye_left']['x']
+      :top => top,
+      :bottom => bottom,
+      :right => right,
+      :left => left,
+      :width => width,
+      :height => height,
+      :center_x => width / 2,
+      :center_y => height / 2
     }
   end
   
@@ -93,5 +105,13 @@ Magickly.dragonfly.configure do |c|
     
     command_str = commands.join(' ')
     process :convert, command_str
+  end
+  
+  c.job :crop_to_faces do |geometry|
+    # raise ArgumentError
+    span = @job.face_span
+    puts span.inspect
+    process :convert, "-extent #{span[:width]}x#{span[:height]}+#{span[:left]}+#{span[:top]}"
+    process :thumb, geometry
   end
 end
