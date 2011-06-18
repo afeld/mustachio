@@ -39,3 +39,13 @@ def get_photo(filename='dubya.jpeg')
   
   Magickly.dragonfly.fetch(image_url)
 end
+
+def stub_face_data(job)
+  url = Addressable::URI.parse(job.uid)
+  filename = url.basename
+  result = nil
+  VCR.use_cassette( filename.chomp(File.extname(filename)) ) do
+    result = yield(job)
+  end
+  result
+end
