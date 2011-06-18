@@ -29,6 +29,8 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
   config.mock_with :rspec
+  
+  config.extend VCR::RSpec::Macros
 end
 
 
@@ -40,12 +42,21 @@ def get_photo(filename='dubya.jpeg')
   Magickly.dragonfly.fetch(image_url)
 end
 
-def stub_face_data(job)
-  url = Addressable::URI.parse(job.uid)
-  filename = url.basename
+def stub_face_data(file_or_job)
+  if file_or_job.is_a? File
+    basename = File.basename(file_or_job.path)
+  elsif file_or_job.is_a? Dragonfly::TempObject
+    basename = File.basename(file_or_job.file.path)
+  elsif file_or_job.is_a? Dragonfly::Job
+    path = Addressable::URI.parse(file_or_job.uid)
+    basename = path.basename
+  else
+    raise ArgumentError, "A #{file_or_job.class} is not a vaild type for #stub_face_data."
+  end
+  
   result = nil
-  VCR.use_cassette( filename.chomp(File.extname(filename)) ) do
-    result = yield(job)
+  VCR.use_cassette( basename.chomp(File.extname(basename)) ) do
+    result = yield(file_or_job)
   end
   result
 end

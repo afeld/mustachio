@@ -4,62 +4,21 @@ Magickly.dragonfly.configure do |c|
   c.log_commands = true
   
   c.analyser.add :face_data do |temp_object|
-    Mustachio.face_client.faces_detect(:file => temp_object.file, :attributes => 'none')['photos'].first
+    Mustachio.face_data(temp_object)
   end
   
   c.analyser.add :face_data_as_px do |temp_object|
-    data = Magickly.dragonfly.analyser.functions[:face_data].first.call(temp_object)
-    
-    new_tags = []
-    data['tags'].map do |face|
-      has_all_attrs = Mustachio::FACE_POS_ATTRS.all? do |pos_attr|
-        if face[pos_attr]
-          face[pos_attr]['x'] *= (data['width'] / 100.0)
-          face[pos_attr]['y'] *= (data['height'] / 100.0)
-          true
-        else # face attribute missing
-          false
-        end
-      end
-      
-      new_tags << face if has_all_attrs
-    end
-    
-    data['tags'] = new_tags
-    data
+    Mustachio.face_data_as_px(temp_object)
   end
   
   c.analyser.add :face_span do |temp_object|
-    face_data = Magickly.dragonfly.analyser.functions[:face_data_as_px].first.call(temp_object)
-    faces = face_data['tags']
-    
-    left_face, right_face = faces.minmax_by{|face| face['center']['x'] }
-    top_face, bottom_face = faces.minmax_by{|face| face['center']['y'] }
-    
-    top = top_face['eye_left']['y']
-    bottom = bottom_face['mouth_center']['y']
-    right = right_face['eye_right']['x']
-    left = left_face['eye_left']['x']
-    width = right - left
-    height = bottom - top
-    
-    # TODO it needs some padding
-    {
-      :top => top,
-      :bottom => bottom,
-      :right => right,
-      :left => left,
-      :width => width,
-      :height => height,
-      :center_x => (left + right) / 2,
-      :center_y => (top + bottom) / 2
-    }
+    Mustachio.face_span(temp_object)
   end
   
   
   
   c.job :mustachify do |stache_num_param|
-    photo_data = @job.face_data_as_px
+    photo_data = Mustachio.face_data_as_px(@job)
     width = photo_data['width']
     
     commands = ['-virtual-pixel transparent']
@@ -113,7 +72,7 @@ Magickly.dragonfly.configure do |c|
     thumb_width = thumb_width.to_f
     thumb_height = thumb_height.to_f
     
-    span = @job.face_span
+    span = Mustachio.face_span(@job)
     puts span.inspect
     scale_x = thumb_width / span[:width]
     scale_y = thumb_height / span[:height]
