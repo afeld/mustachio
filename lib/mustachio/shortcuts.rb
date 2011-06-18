@@ -8,7 +8,7 @@ Magickly.dragonfly.configure do |c|
   end
   
   c.analyser.add :face_data_as_px do |temp_object|
-    data = Mustachio.face_client.faces_detect(:file => temp_object.file, :attributes => 'none')['photos'].first # TODO use #face_data
+    data = Magickly.dragonfly.analyser.functions[:face_data].first.call(temp_object)
     
     new_tags = []
     data['tags'].map do |face|
