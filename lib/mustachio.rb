@@ -38,22 +38,28 @@ module Mustachio
     
     # URLs are preferred, because the detection results can be cached by Face.com
     def face_data(file_or_job)
+      # get the URL or file object, if needed
       if file_or_job.is_a? Dragonfly::Job
         uri = file_or_job.uid
         if Addressable::URI.parse(uri).absolute?
-          self.face_data(uri)
+          file_or_job = uri
         else
-          self.face_data(file_or_job.temp_object)
+          file_or_job = file_or_job.temp_object
         end
-      elsif file_or_job.is_a? File
-        Mustachio.face_client.faces_detect(:file => file_or_job, :attributes => 'none')['photos'].first
       elsif file_or_job.is_a? Dragonfly::TempObject
-        self.face_data(file_or_job.file)
-      elsif file_or_job.is_a? String
-        Mustachio.face_client.faces_detect(:urls => [file_or_job], :attributes => 'none')['photos'].first
+        file_or_job = file_or_job.file
+      end
+      
+      # retrieve face data
+      if file_or_job.is_a? String
+        face_data = Mustachio.face_client.faces_detect(:urls => [file_or_job], :attributes => 'none')
+      elsif file_or_job.is_a? File
+        face_data = Mustachio.face_client.faces_detect(:file => file_or_job, :attributes => 'none')
       else
         raise ArgumentError, "A #{file_or_job.class} is not a valid argument for #face_data.  Please provide a File or a Dragonfly::Job."
       end
+      
+      face_data['photos'].first
     end
     
     def face_data_as_px(file_or_job)
