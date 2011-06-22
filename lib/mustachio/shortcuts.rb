@@ -77,6 +77,7 @@ Magickly.dragonfly.configure do |c|
     scale_x = thumb_width / span[:width]
     scale_y = thumb_height / span[:height]
     
+    # TODO
     # if thumb larger than span
     # center span and crop
     # else
@@ -84,15 +85,38 @@ Magickly.dragonfly.configure do |c|
     
     # center the span in the dimension with the smaller scale
     if scale_x < scale_y
-      scale = scale_x
-      offset_x = span[:left] * scale
-      offset_y = (span[:center_y] * scale) - (thumb_height / 2)
+      orig_height = @job.height
+      # check if image is tall enough for this scaling
+      if orig_height * scale_x >= thumb_height
+        @scale = scale_x
+        @offset_x = span[:left] * @scale
+      else
+        # image is too short - increase scale to fit height
+        @scale = thumb_height / orig_height.to_f
+        orig_width = @job.width
+        @offset_x = span[:left] * @scale + ((@scale - scale_x) * orig_width / 2.0)
+      end
+      
+      @offset_y = (span[:center_y] * @scale) - (thumb_height / 2)
     else
-      scale = scale_y
-      offset_x = (span[:center_x] * scale) - (thumb_width / 2)
-      offset_y = span[:top] * scale
+      orig_width = @job.width
+      # check if image is wide enough for this scaling
+      if orig_width * scale_y >= thumb_width
+        @scale = scale_y
+        @offset_y = span[:top] * @scale
+      else
+        # image is too narrow - increase scale to fit width
+        @scale = thumb_width / orig_width.to_f
+        orig_height = @job.height
+        @offset_y = span[:top] * @scale + ((@scale - scale_y) * orig_height / 2.0)
+      end
+      
+      @offset_x = (span[:center_x] * @scale) - (thumb_width / 2)
     end
     
-    process :convert, "-resize #{(scale * 100).to_i}% -extent #{geometry}+#{offset_x.to_i}+#{offset_y.to_i}"
+    # round up, to ensure the scaled image fills the thumb area
+    percentage = (@scale * 100).ceil
+    
+    process :convert, "-resize #{percentage}% -extent #{geometry}+#{@offset_x.to_i}+#{@offset_y.to_i}"
   end
 end

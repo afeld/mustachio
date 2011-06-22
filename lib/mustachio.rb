@@ -4,7 +4,7 @@ require File.join(File.dirname(__FILE__), 'mustachio', 'shortcuts')
 
 module Mustachio
   FACE_POS_ATTRS = ['center', 'eye_left', 'eye_right', 'mouth_left', 'mouth_center', 'mouth_right', 'nose']
-  FACE_SPAN_SCALE = 1.5
+  FACE_SPAN_SCALE = 2.0
   
   class << self
     def face_client
