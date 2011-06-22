@@ -4,6 +4,7 @@ require File.join(File.dirname(__FILE__), 'mustachio', 'shortcuts')
 
 module Mustachio
   FACE_POS_ATTRS = ['center', 'eye_left', 'eye_right', 'mouth_left', 'mouth_center', 'mouth_right', 'nose']
+  FACE_SPAN_SCALE = 1.5
   
   class << self
     def face_client
@@ -80,27 +81,34 @@ module Mustachio
     def face_span(file_or_job)
       face_data = self.face_data_as_px(file_or_job)
       faces = face_data['tags']
-
+      
       left_face, right_face = faces.minmax_by{|face| face['center']['x'] }
       top_face, bottom_face = faces.minmax_by{|face| face['center']['y'] }
-
+      
       top = top_face['eye_left']['y']
       bottom = bottom_face['mouth_center']['y']
       right = right_face['eye_right']['x']
       left = left_face['eye_left']['x']
       width = right - left
       height = bottom - top
-
-      # TODO it needs some padding
+      
+      # compute adjusted values for padding around face span
+      adj_width = width * FACE_SPAN_SCALE
+      adj_height = height * FACE_SPAN_SCALE
+      adj_top = top - ((adj_height - height) / 2.0)
+      adj_bottom = bottom + ((adj_height - height) / 2.0)
+      adj_right = right + ((adj_width - width) / 2.0)
+      adj_left = left - ((adj_width - width) / 2.0)
+      
       {
-        :top => top,
-        :bottom => bottom,
-        :right => right,
-        :left => left,
-        :width => width,
-        :height => height,
-        :center_x => (left + right) / 2,
-        :center_y => (top + bottom) / 2
+        :top => adj_top,
+        :bottom => adj_bottom,
+        :right => adj_right,
+        :left => adj_left,
+        :width => adj_width,
+        :height => adj_height,
+        :center_x => (adj_left + adj_right) / 2,
+        :center_y => (adj_top + adj_bottom) / 2
       }
     end
   end
