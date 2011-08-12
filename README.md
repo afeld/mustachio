@@ -1,3 +1,3 @@
-![the queen](http://mustachio.heroku.com/?src=http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg)
+![the queen](http://mustachify.me/?src=http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg)
 
-http://mustachio.heroku.com/?src=YOUR-IMAGE-URL
+http://mustachify.me/?src=YOUR-IMAGE-URL
