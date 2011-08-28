@@ -24,9 +24,13 @@ module Mustachio
     get %r{^/(\d+|rand)?$} do |stache_num|
       src = params[:src]
       if src
-        # use the specified stache, otherwise fall back to random
-        image = Magickly.process_src params[:src], :mustachify => (stache_num || true)
-        image.to_response(env)
+        if faceless?(src)
+          redirect src, 301
+        else
+          # use the specified stache, otherwise fall back to random
+          image = Magickly.process_src params[:src], :mustachify => (stache_num || true)
+          image.to_response(env)
+        end
       else
         @stache_num = stache_num
         @site = Addressable::URI.parse(request.url).site
@@ -45,6 +49,13 @@ module Mustachio
     get '/face_api_dev_challenge' do
       haml :face_api_dev_challenge
     end
-    
+
+    helpers do
+      def faceless?(url)
+        face_data = Mustachio.face_client.faces_detect(:urls => [url], :attributes => 'none')
+
+        face_data['photos'].first['tags'].empty?
+      end
+    end
   end
 end
