@@ -3,7 +3,7 @@ require 'image_size'
 require 'face'
 
 Magickly.dragonfly.configure do |c|
-  c.log_commands = true
+#  c.log_commands = true
   
   c.analyser.add :face_data do |temp_object|
     Mustachio.face_client.faces_detect(:file => temp_object.file, :attributes => 'none')['photos'].first
