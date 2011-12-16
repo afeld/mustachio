@@ -2,7 +2,12 @@ source 'http://rubygems.org'
 
 gem 'sinatra', '~> 1.2.3', :require => 'sinatra/base'
 gem 'dragonfly', '~> 0.9.0'
-gem 'magickly', '~> 1.1'
+#gem 'magickly', '~> 1.1'
+
+gem('magickly',
+    :git => 'git://github.com/tolsen/magickly.git',
+    :ref => '706b89319fcd5aa9b29eb3d6c663555f33149688')
+
 gem 'addressable', '~> 2.2.4', :require => 'addressable/uri'
 gem 'haml'
 

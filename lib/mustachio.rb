@@ -9,15 +9,15 @@ Magickly.dragonfly.configure do |c|
     Mustachio.face_client.faces_detect(:file => temp_object.file, :attributes => 'none')['photos'].first
   end
   
-  c.analyser.add :face_data_as_px do |temp_object|
+  c.analyser.add :face_data_as_px do |temp_object, width, height|
     data = Mustachio.face_client.faces_detect(:file => temp_object.file, :attributes => 'none')['photos'].first # TODO use #face_data
     
     new_tags = []
     data['tags'].map do |face|
       has_all_attrs = Mustachio::FACE_POS_ATTRS.all? do |pos_attr|
         if face[pos_attr]
-          face[pos_attr]['x'] *= (data['width'] / 100.0)
-          face[pos_attr]['y'] *= (data['height'] / 100.0)
+          face[pos_attr]['x'] *= (width / 100.0)
+          face[pos_attr]['y'] *= (height / 100.0)
           true
         else
           # face attribute missing
@@ -33,7 +33,9 @@ Magickly.dragonfly.configure do |c|
   end
   
   c.job :mustachify do |stache_num_param|
-    photo_data = @job.face_data_as_px
+    width = @job.width
+    height = @job.height
+    photo_data = @job.thumb('900x900>').face_data_as_px(width, height)
     width = photo_data['width']
     
     commands = ['-virtual-pixel transparent']
