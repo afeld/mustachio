@@ -20,6 +20,8 @@ Magickly.dragonfly.configure do |c|
   c.job :mustachify do |stache_num_param|
     width = @job.width
     height = @job.height
+    # resize to smaller than 900px, because Face.com downsizes the image to this anyway
+    # TODO move resize inside of Mustachio.face_data
     photo_data = @job.thumb('900x900>').face_data_as_px(width, height)
     
     commands = ['-virtual-pixel transparent']
