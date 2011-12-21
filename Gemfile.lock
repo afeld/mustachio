@@ -1,36 +1,37 @@
+GIT
+  remote: git://github.com/tolsen/magickly.git
+  revision: 706b89319fcd5aa9b29eb3d6c663555f33149688
+  ref: 706b89319fcd5aa9b29eb3d6c663555f33149688
+  specs:
+    magickly (1.2.0)
+      activesupport (>= 2.0.0)
+      addressable (~> 2.2)
+      dragonfly (~> 0.9.1)
+      haml (~> 3.0)
+      httparty (~> 0.8.1)
+      json (~> 1.5)
+      sinatra (~> 1.2.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (3.1.0)
+    activesupport (3.1.3)
       multi_json (~> 1.0)
     addressable (2.2.6)
     archive-tar-minitar (0.5.2)
-    async-rack (0.5.1)
-      rack (~> 1.1)
     columnize (0.3.4)
     crack (0.1.8)
     diff-lcs (1.1.3)
     dragonfly (0.9.5)
       rack
-    em-http-request (1.0.0)
-      addressable (>= 2.2.3)
-      em-socksify
-      eventmachine (>= 1.0.0.beta.3)
-      http_parser.rb (>= 0.5.2)
-    em-resolv-replace (1.1.1)
-    em-socksify (0.1.0)
-      eventmachine
-    em-synchrony (1.0.0)
-      eventmachine (>= 1.0.0.beta.1)
-    eventmachine (1.0.0.beta.3)
     face (0.0.4)
       json (>= 1.4.6)
       rest-client (>= 1.6.1)
     git (1.2.5)
     haml (3.1.2)
-    http_parser.rb (0.5.2)
-    httparty (0.7.8)
-      crack (= 0.1.8)
+    httparty (0.8.1)
+      multi_json
+      multi_xml
     imagesize (0.1.1)
     jeweler (1.6.4)
       bundler (~> 1.0)
@@ -41,18 +42,11 @@ GEM
       rbx-require-relative (> 0.0.4)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
-    magickly (1.3.0)
-      activesupport (>= 2.0.0)
-      addressable (~> 2.2)
-      dragonfly (~> 0.9.1)
-      httparty (~> 0.7.3)
-      sinatra (~> 1.2.1)
-      sinatra-synchrony (~> 0.2.0)
     mime-types (1.16)
-    multi_json (1.0.3)
+    multi_json (1.0.4)
+    multi_xml (0.4.1)
     newrelic_rpm (3.1.1)
     rack (1.3.2)
-    rack-fiber_pool (0.9.2)
     rack-test (0.6.1)
       rack (>= 1.0)
     rake (0.9.2)
@@ -84,19 +78,11 @@ GEM
       archive-tar-minitar (>= 0.5.2)
     sinatra (1.2.6)
       rack (~> 1.1)
-      tilt (< 2.0, >= 1.2.2)
-    sinatra-synchrony (0.2.0)
-      async-rack (>= 0.5.1)
-      em-http-request (= 1.0.0)
-      em-resolv-replace (>= 1.1.1)
-      em-synchrony (= 1.0.0)
-      eventmachine (= 1.0.0.beta.3)
-      rack-fiber_pool (= 0.9.2)
-      sinatra (>= 1.0)
+      tilt (>= 1.2.2, < 2.0)
     tilt (1.3.3)
     vcr (1.11.3)
     webmock (1.7.6)
-      addressable (> 2.2.5, ~> 2.2)
+      addressable (~> 2.2, > 2.2.5)
       crack (>= 0.1.7)
 
 PLATFORMS
@@ -109,7 +95,7 @@ DEPENDENCIES
   haml (~> 3.0)
   imagesize (~> 0.1)
   jeweler (~> 1.6)
-  magickly (~> 1.1)
+  magickly!
   newrelic_rpm
   rack-test
   rspec (~> 2.5)

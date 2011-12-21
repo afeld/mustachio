@@ -2,6 +2,7 @@ require 'magickly'
 require 'image_size'
 require File.join(File.dirname(__FILE__), 'mustachio', 'shortcuts')
 
+
 module Mustachio
   FACE_POS_ATTRS = ['center', 'eye_left', 'eye_right', 'mouth_left', 'mouth_center', 'mouth_right', 'nose']
   FACE_SPAN_SCALE = 2.0
@@ -38,7 +39,8 @@ module Mustachio
     
     # URLs are preferred, because the detection results can be cached by Face.com
     def face_data(file_or_job)
-      # get the URL or file object, if needed
+      # TODO resize to 900x900, since Face.com resizes it anyway
+
       if file_or_job.is_a? Dragonfly::Job
         uri = file_or_job.uid
         if Addressable::URI.parse(uri).absolute?
@@ -62,15 +64,17 @@ module Mustachio
       face_data['photos'].first
     end
     
-    def face_data_as_px(file_or_job)
+    def face_data_as_px(file_or_job, width=nil, height=nil)
       data = self.face_data(file_or_job)
+      width ||= data['width']
+      height ||= data['height']
 
       new_tags = []
       data['tags'].map do |face|
         has_all_attrs = FACE_POS_ATTRS.all? do |pos_attr|
           if face[pos_attr]
-            face[pos_attr]['x'] *= (data['width'] / 100.0)
-            face[pos_attr]['y'] *= (data['height'] / 100.0)
+            face[pos_attr]['x'] *= (width / 100.0)
+            face[pos_attr]['y'] *= (height / 100.0)
             true
           else # face attribute missing
             false

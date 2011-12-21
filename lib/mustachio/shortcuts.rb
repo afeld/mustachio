@@ -1,14 +1,14 @@
 require 'face'
 
 Magickly.dragonfly.configure do |c|
-  c.log_commands = true
+  # c.log_commands = true
   
   c.analyser.add :face_data do |temp_object|
     Mustachio.face_data(temp_object)
   end
   
-  c.analyser.add :face_data_as_px do |temp_object|
-    Mustachio.face_data_as_px(temp_object)
+  c.analyser.add :face_data_as_px do |temp_object, width, height|
+    Mustachio.face_data_as_px(temp_object, width, height)
   end
   
   c.analyser.add :face_span do |temp_object|
@@ -18,8 +18,9 @@ Magickly.dragonfly.configure do |c|
   
   
   c.job :mustachify do |stache_num_param|
-    photo_data = Mustachio.face_data_as_px(@job)
-    width = photo_data['width']
+    width = @job.width
+    height = @job.height
+    photo_data = @job.thumb('900x900>').face_data_as_px(width, height)
     
     commands = ['-virtual-pixel transparent']
     photo_data['tags'].each do |face|
