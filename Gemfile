@@ -2,8 +2,6 @@ source 'http://rubygems.org'
 
 gem 'sinatra', '~> 1.2', :require => 'sinatra/base'
 gem 'dragonfly', '~> 0.9.0'
-#gem 'magickly', '~> 1.1'
-
 gem 'magickly', '~> 1.2'
 
 gem 'addressable', '~> 2.2.4', :require => 'addressable/uri'
