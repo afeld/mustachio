@@ -5,7 +5,7 @@ gem 'dragonfly', '~> 0.9.0'
 #gem 'magickly', '~> 1.2'
 gem('magickly',
     :git => 'git://github.com/tolsen/magickly.git',
-    :ref => 'b08de4f76640590deee30669b0970ee077ab9922')
+    :ref => '0a960ceb30b96fcf42639247a341fd575e45a5ad')
 #gem 'magickly', :path => '../magickly'
 
 gem 'addressable', '~> 2.2.4', :require => 'addressable/uri'
