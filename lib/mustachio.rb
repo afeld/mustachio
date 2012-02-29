@@ -1,5 +1,6 @@
 require 'magickly'
 require 'image_size'
+require File.join(File.dirname(__FILE__), 'mustachio', 'factories')
 require File.join(File.dirname(__FILE__), 'mustachio', 'shortcuts')
 
 
