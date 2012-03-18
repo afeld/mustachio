@@ -21,6 +21,8 @@ group :development, :test do
   gem 'vcr', '~> 2.0'
   
   gem 'ruby-debug19', :require => 'ruby-debug', :platforms => :ruby_19
+  # dont use unreleased 0.5.13 gem
+  gem 'linecache19', '0.5.12', :platforms => :ruby_19
   gem 'ruby-debug', :platforms => :ruby_18
 end
 

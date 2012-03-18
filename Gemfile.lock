@@ -29,7 +29,7 @@ GEM
     json (1.6.5)
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
-    linecache19 (0.5.13)
+    linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
     magickly (1.4.0)
       activesupport (>= 2.0.0)
@@ -95,6 +95,7 @@ DEPENDENCIES
   haml (~> 3.0)
   imagesize (~> 0.1)
   jeweler (~> 1.6)
+  linecache19 (= 0.5.12)
   magickly (~> 1.2)
   newrelic_rpm
   rack-test
