@@ -7,7 +7,7 @@ gem 'magickly', '~> 1.2'
 gem 'addressable', '~> 2.2', :require => 'addressable/uri'
 gem 'haml', '~> 3.0'
 
-gem 'face', '0.0.4'
+gem 'face', '0.0.5'
 gem 'imagesize', '~> 0.1', :require => 'image_size'
 
 group :development do
@@ -19,11 +19,9 @@ group :development, :test do
   gem 'rspec', '~> 2.5'
   gem 'webmock', '~> 1.8', :require => 'webmock/rspec'
   gem 'vcr', '~> 2.0'
-  
-  gem 'ruby-debug19', :require => 'ruby-debug', :platforms => :ruby_19
-  # dont use unreleased 0.5.13 gem
-  gem 'linecache19', '0.5.12', :platforms => :ruby_19
-  gem 'ruby-debug', :platforms => :ruby_18
+
+  gem 'ruby-debug', :platforms => :ruby_18  
+  gem 'debugger', :platforms => :ruby_19
 end
 
 group :production do
