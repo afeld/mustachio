@@ -14,5 +14,5 @@
 #   mouth_overlap: 50
 -
   filename: bane_notop.png
-  vert_offset: 100
+  vert_offset: 1
   mouth_overlap: 100
