@@ -50,6 +50,8 @@ Magickly.dragonfly.configure do |c|
         ( face['nose']['x'] - face['mouth_center']['x'] ).to_f**2 +
         ( face['nose']['y'] - face['mouth_center']['y'] ).to_f**2
       )
+      # Cheesy double to roughly cover to chin
+      desired_height = desired_height * 2
       mouth_intersect = mustache['height'] - mustache['mouth_overlap']
       scale = desired_height / mouth_intersect
       
