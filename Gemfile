@@ -11,7 +11,6 @@ gem('magickly',
 gem 'addressable', '~> 2.2.4', :require => 'addressable/uri'
 gem 'haml', '~> 3.0'
 
-gem 'face', '0.0.4'
 gem 'imagesize', '~> 0.1', :require => 'image_size'
 
 group :development do
