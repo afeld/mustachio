@@ -6,8 +6,8 @@ class Rekognition
 
     # return tuple [rekognition_json, rekognition_width, rekognition_height]
     def data file
-      json = rekognition_json file
-      width, height = dims file
+      json = self.json file
+      width, height = self.dims file
       [json, width, height]
     end
 
