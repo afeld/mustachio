@@ -1,6 +1,6 @@
 # files are expected to be under config/staches/
-# thanks to http://therantsandraves.com/?p=602 for the 'staches
 
+# thanks to http://therantsandraves.com/?p=602 for these 'staches
 -
   filename: mustache_03.png
   vert_offset: 15
@@ -12,3 +12,16 @@
   filename: mustache_07.png
   vert_offset: 30
   mouth_overlap: 50
+
+-
+  filename: grand-handlebar.png
+  vert_offset: 30
+  mouth_overlap: 150
+-
+  filename: painters-brush.png
+  vert_offset: 20
+  mouth_overlap: 125
+-
+  filename: petite-handlebar.png
+  vert_offset: 0
+  mouth_overlap: 60
