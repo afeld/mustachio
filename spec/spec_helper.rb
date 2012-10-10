@@ -18,6 +18,13 @@ Dir[File.join('spec', 'support', '**', '*.rb')].each {|f| require f}
 VCR.configure do |c|
   c.cassette_library_dir = File.join(File.dirname(__FILE__), 'fixtures', 'vcr_cassettes')
   c.hook_into :webmock # or :fakeweb
+  c.default_cassette_options = {
+    :record => :new_episodes
+  }
+  
+  # VCR doesn't recognize when requests are explicitly mocked - this is a workaround
+  # https://github.com/myronmarston/vcr/issues/146
+  c.allow_http_connections_when_no_cassette = true
 end
 
 RSpec.configure do |config|
