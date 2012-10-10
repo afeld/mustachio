@@ -39,7 +39,7 @@ module Mustachio
     end
 
     def setup_rekognition
-      require File.join(File.dirname(__FILE__), 'rekognition')
+      require File.join(File.dirname(__FILE__), 'mustachio', 'rekognition')
 
       self.setup_face_detection do |file|
         json = Rekognition.json file, 'face_part'
