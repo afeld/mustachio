@@ -37,6 +37,26 @@ module Mustachio
     def setup_face_detection &block
       @@face_detection_proc = block
     end
+
+    def setup_rekognition
+      require File.join(File.dirname(__FILE__), 'rekognition')
+
+      self.setup_face_detection do |file|
+        json = Rekognition.json file, 'face_part'
+        width, height = Rekognition.dims file
+
+        json['face_detection'].map do |entry|
+          mouth_left, mouth_right, nose = entry.values_at('mouth_l', 'mouth_r', 'nose').map do |dims|
+            {
+              'x' => ((dims['x'].to_f / width) * 100.0),
+              'y' => ((dims['y'].to_f / height) * 100.0)
+            }
+          end
+
+          { 'mouth_left' => mouth_left, 'mouth_right' => mouth_right, 'nose' => nose }
+        end
+      end
+    end
     
     def face_data(file_or_job)
       file = case file_or_job
@@ -50,7 +70,8 @@ module Mustachio
         raise ArgumentError, "A #{file_or_job.class} is not a valid argument for #face_data.  Please provide a File or a Dragonfly::Job."
       end
 
-      raise "You forgot to setup_face_detection() !" unless @@face_detection_proc
+      # default to using Rekognition for face detection
+      self.setup_rekognition unless defined? @@face_detection_proc
 
       @@face_detection_proc.call file
     end

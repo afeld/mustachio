@@ -15,9 +15,9 @@ Mustachio::App.set :environment, :test
 # in spec/support/ and its subdirectories.
 Dir[File.join('spec', 'support', '**', '*.rb')].each {|f| require f}
 
-VCR.config do |c|
+VCR.configure do |c|
   c.cassette_library_dir = File.join(File.dirname(__FILE__), 'fixtures', 'vcr_cassettes')
-  c.stub_with :webmock # or :fakeweb
+  c.hook_into :webmock # or :fakeweb
 end
 
 RSpec.configure do |config|
@@ -31,6 +31,9 @@ RSpec.configure do |config|
   config.mock_with :rspec
   
   config.extend VCR::RSpec::Macros
+
+  ENV['MUSTACHIO_REKOGNITION_KEY'] = '123'
+  ENV['MUSTACHIO_REKOGNITION_SECRET'] = '456'
 end
 
 

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Aidan Feldman"]
-  s.date = "2011-12-21"
+  s.date = "2012-10-10"
   s.description = "Adds a 'mustachify' shortcut to magickly."
   s.email = "aidan.feldman@gmail.com"
   s.extra_rdoc_files = [
@@ -30,7 +30,9 @@ Gem::Specification.new do |s|
     "config/staches.yml",
     "lib/mustachio.rb",
     "lib/mustachio/app.rb",
+    "lib/mustachio/factories.rb",
     "lib/mustachio/public/favicon.ico",
+    "lib/mustachio/public/images/dubya.jpeg",
     "lib/mustachio/public/images/guy_hecker.jpeg",
     "lib/mustachio/public/images/staches/colonel_mustard.png",
     "lib/mustachio/public/images/staches/mustache_03.png",
@@ -42,6 +44,7 @@ Gem::Specification.new do |s|
     "lib/mustachio/views/gallery.haml",
     "lib/mustachio/views/index.haml",
     "lib/mustachio/views/test.haml",
+    "lib/rekognition.rb",
     "mustachio.gemspec",
     "spec/fixtures/vcr_cassettes/big_obama.yml",
     "spec/fixtures/vcr_cassettes/dubya.yml",
@@ -57,7 +60,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/afeld/mustachio"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.12"
+  s.rubygems_version = "1.8.24"
   s.summary = "automatic mustachifying of any image"
 
   if s.respond_to? :specification_version then
@@ -66,49 +69,40 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<sinatra>, ["~> 1.2"])
       s.add_runtime_dependency(%q<dragonfly>, ["~> 0.9.0"])
-      s.add_runtime_dependency(%q<magickly>, ["~> 1.2"])
-      s.add_runtime_dependency(%q<addressable>, ["~> 2.2.4"])
+      s.add_runtime_dependency(%q<magickly>, [">= 0"])
+      s.add_runtime_dependency(%q<rest-client>, ["~> 1.6"])
+      s.add_runtime_dependency(%q<addressable>, ["~> 2.2"])
       s.add_runtime_dependency(%q<haml>, ["~> 3.0"])
-      s.add_runtime_dependency(%q<face>, ["= 0.0.4"])
       s.add_runtime_dependency(%q<imagesize>, ["~> 0.1"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6"])
       s.add_development_dependency(%q<rack-test>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.5"])
-      s.add_development_dependency(%q<webmock>, ["~> 1.6"])
-      s.add_development_dependency(%q<vcr>, ["~> 1.9"])
-      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
-      s.add_development_dependency(%q<ruby-debug>, [">= 0"])
+      s.add_development_dependency(%q<debugger>, [">= 0"])
     else
       s.add_dependency(%q<sinatra>, ["~> 1.2"])
       s.add_dependency(%q<dragonfly>, ["~> 0.9.0"])
-      s.add_dependency(%q<magickly>, ["~> 1.2"])
-      s.add_dependency(%q<addressable>, ["~> 2.2.4"])
+      s.add_dependency(%q<magickly>, [">= 0"])
+      s.add_dependency(%q<rest-client>, ["~> 1.6"])
+      s.add_dependency(%q<addressable>, ["~> 2.2"])
       s.add_dependency(%q<haml>, ["~> 3.0"])
-      s.add_dependency(%q<face>, ["= 0.0.4"])
       s.add_dependency(%q<imagesize>, ["~> 0.1"])
       s.add_dependency(%q<jeweler>, ["~> 1.6"])
       s.add_dependency(%q<rack-test>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.5"])
-      s.add_dependency(%q<webmock>, ["~> 1.6"])
-      s.add_dependency(%q<vcr>, ["~> 1.9"])
-      s.add_dependency(%q<ruby-debug19>, [">= 0"])
-      s.add_dependency(%q<ruby-debug>, [">= 0"])
+      s.add_dependency(%q<debugger>, [">= 0"])
     end
   else
     s.add_dependency(%q<sinatra>, ["~> 1.2"])
     s.add_dependency(%q<dragonfly>, ["~> 0.9.0"])
-    s.add_dependency(%q<magickly>, ["~> 1.2"])
-    s.add_dependency(%q<addressable>, ["~> 2.2.4"])
+    s.add_dependency(%q<magickly>, [">= 0"])
+    s.add_dependency(%q<rest-client>, ["~> 1.6"])
+    s.add_dependency(%q<addressable>, ["~> 2.2"])
     s.add_dependency(%q<haml>, ["~> 3.0"])
-    s.add_dependency(%q<face>, ["= 0.0.4"])
     s.add_dependency(%q<imagesize>, ["~> 0.1"])
     s.add_dependency(%q<jeweler>, ["~> 1.6"])
     s.add_dependency(%q<rack-test>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.5"])
-    s.add_dependency(%q<webmock>, ["~> 1.6"])
-    s.add_dependency(%q<vcr>, ["~> 1.9"])
-    s.add_dependency(%q<ruby-debug19>, [">= 0"])
-    s.add_dependency(%q<ruby-debug>, [">= 0"])
+    s.add_dependency(%q<debugger>, [">= 0"])
   end
 end
 

@@ -1,5 +1,3 @@
-require 'face'
-
 Magickly.dragonfly.configure do |c|
   # c.log_commands = true
   

@@ -9,7 +9,6 @@
 #     thumb_height = thumb_height.to_f
     
 #     span = Mustachio.face_span(convert.image)
-#     puts span.inspect
 #     scale_x = thumb_width / span[:width]
 #     scale_y = thumb_height / span[:height]
     
