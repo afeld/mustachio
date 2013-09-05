@@ -13,18 +13,32 @@ module Mustachio
       end
 
       def json file, jobs = 'face'
-        response = RestClient.post('http://rekognition.com/func/api/',
-                                   api_key: REKOGNITION_KEY,
-                                   api_secret: REKOGNITION_SECRET,
-                                   jobs: jobs,
-                                   uploaded_file: file,
-                                   name_space: '',
-                                   user_id: '')
-        JSON.parse response
+        conn = Faraday.new :url => 'https://rekognition.com' do |faraday|
+          faraday.request :multipart
+          faraday.request :url_encoded
+          faraday.adapter :excon
+        end
+
+        payload = {
+          :api_key       => REKOGNITION_KEY,
+          :api_secret    => REKOGNITION_SECRET,
+          :uploaded_file => Faraday::UploadIO.new(file, content_type(file)),
+          :jobs          => jobs,
+          :name_space    => '',
+          :user_id       => ''
+        }
+
+        response = conn.post '/func/api/', payload
+
+        JSON.parse response.body
       end
 
       def dims file
         `identify -format "%wx%h" #{file.path}`.strip.split('x').map(&:to_f)
+      end
+
+      def content_type file
+        `file -b --mime #{file.path}`.strip.split(/[:;]\s+/)[0]
       end
 
       def face_detection file
@@ -42,7 +56,6 @@ module Mustachio
           { 'mouth_left' => mouth_left, 'mouth_right' => mouth_right, 'nose' => nose }
         end
       end
-      
     end
   end
 end
