@@ -8,7 +8,8 @@ gem('magickly',
     :ref => 'cd17608a9c4468da1f738815a96dc2a9473fc029')
 #gem 'magickly', :path => '../magickly'
 
-gem 'rest-client', '~> 1.6', :require => 'rest_client'
+gem 'excon', '~> 0.25.3'
+gem 'faraday', '~> 0.8.8'
 
 gem 'addressable', '~> 2.2', :require => 'addressable/uri'
 gem 'haml', '>= 3.0', '< 5'

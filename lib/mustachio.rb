@@ -49,6 +49,7 @@ module Mustachio
     def face_data(file_or_job)
       file = case file_or_job
       when Dragonfly::Job
+        file_or_job.apply if file_or_job.temp_object.nil?
         file_or_job.temp_object.file
       when Dragonfly::TempObject
         file_or_job.file

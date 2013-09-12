@@ -5,13 +5,12 @@ describe Magickly do
     @image_path = File.join(File.dirname(__FILE__), '..', 'support', 'dubya.jpeg')
   end
   
-  describe ".face_data" do
-    use_vcr_cassette 'dubya'
+  describe ".face_data", :vcr => { :cassette_name => "dubya" } do
     
     def check_face_data(file_or_job)
       data = Mustachio.face_data(file_or_job)
       
-      data.should be_a Hash
+      data.should be_a Array
     end
     
     it "should accept a File" do
