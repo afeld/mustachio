@@ -23,7 +23,6 @@ describe "analysers", :vcr => true do
   
   describe "#face_data_as_px" do
     it "should scale the detection areas proportionally for large photos" do
-      pending "big_mouth_x is not 5.0 within small_mouth_x * scale"
       big_obama = get_photo('big_obama.jpeg')
       small_obama = get_photo('small_obama.jpeg')
       
