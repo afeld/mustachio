@@ -4,7 +4,7 @@ gem 'sinatra', '~> 1.2', :require => 'sinatra/base'
 gem 'dragonfly', '~> 0.9.14'
 #gem 'magickly', '~> 1.2'
 gem('magickly',
-    :github => 'afeld/magickly',
+    :git => 'git://github.com/afeld/magickly.git',
     :ref => 'cd17608a9c4468da1f738815a96dc2a9473fc029')
 #gem 'magickly', :path => '../magickly'
 gem 'activesupport', '< 4.0' # requires Ruby version >= 1.9.3
