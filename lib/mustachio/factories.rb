@@ -67,8 +67,8 @@ Magickly.add_convert_factory :mustachify do |c|
     # resize to smaller than 900px, because Face.com downsizes the image to this anyway
     # TODO move resize inside of Mustachio.face_data
     faces = convert.image.thumb('900x900>').face_data_as_px(width, height)
-    
-    commands = ['-virtual-pixel transparent']
+
+    commands = ['-alpha Background -background Transparent']
     faces.each do |face|
       stache_num = case stache_num_param
                    when true
