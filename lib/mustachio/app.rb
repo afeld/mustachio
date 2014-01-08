@@ -24,7 +24,7 @@ module Mustachio
       src = params[:src]
       if src
         # use the specified stache, otherwise fall back to random
-        image = Magickly.process_src params[:src], :mustachify => (stache_num || true)
+        image = Magickly.process_src params[:src], :mustachify => (stache_num || 'rand')
         image.to_response(env)
       else
         @stache_num = stache_num
