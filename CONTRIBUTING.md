@@ -5,9 +5,9 @@ bundle
 bundle exec rake
 ```
 
-To run app, you'll need a key from http://rekognition.com/.  Then run:
+To run app, you'll need credentials by signing up for an account from http://rekognition.com/.  Then run:
 
 ```bash
 bundle
-MUSTACHIO_REKOGNITION_KEY=... bundle exec rackup
+MUSTACHIO_REKOGNITION_KEY=... MUSTACHIO_REKOGNITION_SECRET=... bundle exec rackup
 ```
