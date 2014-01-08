@@ -8,6 +8,10 @@ gem('magickly',
 #gem 'magickly', :path => '../magickly'
 gem 'activesupport', '< 4.0' # requires Ruby version >= 1.9.3
 
+# v0.12.0 requires Ruby 1.9.3+
+# https://github.com/jnunemaker/httparty/commit/aed9e0d21eecb25a4e9fb50df5c72ecc7f3ebb84
+gem 'httparty', '< 0.12.0'
+
 gem 'excon'
 gem 'faraday'
 
