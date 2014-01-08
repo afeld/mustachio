@@ -46,3 +46,6 @@ pkg
 
 # For rubinius:
 #*.rbc
+
+# For rbenv/RVM
+.ruby-version
