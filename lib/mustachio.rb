@@ -1,5 +1,5 @@
 require 'magickly'
-require 'image_size'
+require 'fastimage'
 require File.join(File.dirname(__FILE__), 'mustachio', 'factories')
 require File.join(File.dirname(__FILE__), 'mustachio', 'shortcuts')
 
@@ -23,7 +23,7 @@ module Mustachio
         
         stache['file_path'] = File.expand_path(File.join(File.dirname(__FILE__), 'mustachio', 'public', 'images', 'staches', stache['filename']))
         unless stache['width'] && stache['height']
-          stache['width'], stache['height'] = ImageSize.new(File.new(stache['file_path'])).get_size
+          stache['width'], stache['height'] = FastImage.size(File.new(stache['file_path']))
         end
         stache
       end

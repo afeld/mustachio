@@ -35,6 +35,8 @@ GEM
     excon (0.31.0)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    fastimage (1.6.3)
+      addressable (~> 2.3, >= 2.3.5)
     git (1.2.6)
     github_api (0.11.1)
       addressable (~> 2.3)
@@ -53,7 +55,6 @@ GEM
       multi_xml (>= 0.5.2)
     httpauth (0.2.0)
     i18n (0.6.9)
-    imagesize (0.1.1)
     jeweler (2.0.0)
       builder
       bundler (>= 1.0)
@@ -117,9 +118,9 @@ DEPENDENCIES
   dragonfly (~> 0.9)
   excon
   faraday
+  fastimage
   haml
   httparty (< 0.12.0)
-  imagesize
   jeweler
   magickly!
   newrelic_rpm
