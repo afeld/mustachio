@@ -27,8 +27,9 @@ end
 group :development, :test do
   gem 'rack-test', :require => 'rack/test'
   gem 'rspec'
-  
-  gem 'debugger'
+
+  gem 'debugger', platforms: :mri_19
+  gem 'byebug', platforms: :mri_20
 end
 
 group :test do
