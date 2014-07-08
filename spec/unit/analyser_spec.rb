@@ -13,11 +13,11 @@ describe "analysers", :vcr => true do
       big_mouth_x = big_obama_data.first['mouth_right']['x']
       small_mouth_x = small_obama_data.first['mouth_right']['x']
       
-      big_mouth_x.should be_kind_of Float
-      small_mouth_x.should be_kind_of Float
+      expect(big_mouth_x).to be_kind_of Float
+      expect(small_mouth_x).to be_kind_of Float
       
       # compare positioning (percentages)
-      small_mouth_x.should be_within(1.0).of(small_mouth_x)
+      expect(small_mouth_x).to be_within(1.0).of(small_mouth_x)
     end
   end
   
@@ -33,13 +33,13 @@ describe "analysers", :vcr => true do
       big_mouth_x = big_obama_data.first['mouth_right']['x']
       small_mouth_x = small_obama_data.first['mouth_right']['x']
       
-      big_mouth_x.should be_kind_of Float
-      small_mouth_x.should be_kind_of Float
-      big_mouth_x.should_not be_within(1.0).of(small_mouth_x)
+      expect(big_mouth_x).to be_kind_of Float
+      expect(small_mouth_x).to be_kind_of Float
+      expect(big_mouth_x).to_not be_within(1.0).of(small_mouth_x)
       
       scale = big_obama.width / small_obama.width.to_f
       # compare positioning (px)
-      big_mouth_x.should be_within(5.0).of(small_mouth_x * scale)
+      expect(big_mouth_x).to be_within(5.0).of(small_mouth_x * scale)
     end
   end
   
@@ -48,9 +48,9 @@ describe "analysers", :vcr => true do
       pending "TODO : Fix to work with pluggable face detection"
       image = get_photo
       span = stub_face_data(image){|img| img.face_span }
-      span.should be_a Hash
-      span[:top].should < span[:bottom]
-      span[:left].should < span[:right]
+      expect(span).to be_a Hash
+      expect(span[:top]).to < span[:bottom]
+      expect(span[:left]).to < span[:right]
     end
   end
 end
