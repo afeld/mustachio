@@ -18,7 +18,7 @@ gem 'faraday'
 gem 'addressable', :require => 'addressable/uri'
 gem 'haml'
 
-gem 'imagesize', :require => 'image_size'
+gem 'fastimage', :require => 'fastimage'
 
 group :development do
   gem 'jeweler'
