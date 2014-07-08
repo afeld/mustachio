@@ -10,7 +10,7 @@ describe Magickly do
     def check_face_data(file_or_job)
       data = Mustachio.face_data(file_or_job)
       
-      data.should be_a Array
+      expect(data).to be_a Array
     end
     
     it "should accept a File" do

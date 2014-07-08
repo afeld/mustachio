@@ -21,7 +21,7 @@ VCR.configure do |c|
   c.default_cassette_options = {
     :record => :new_episodes
   }
-  
+
   # VCR doesn't recognize when requests are explicitly mocked - this is a workaround
   # https://github.com/myronmarston/vcr/issues/146
   c.allow_http_connections_when_no_cassette = true
@@ -30,15 +30,12 @@ VCR.configure do |c|
 end
 
 RSpec.configure do |config|
-  # == Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
   config.mock_with :rspec
-  
+
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
+
   ENV['MUSTACHIO_REKOGNITION_KEY'] = '123'
   ENV['MUSTACHIO_REKOGNITION_SECRET'] = '456'
 end
@@ -48,7 +45,7 @@ def get_photo(filename='dubya.jpeg')
   image_url = "http://www.foo.com/#{filename}"
   image_path = File.join(File.dirname(__FILE__), 'support', filename)
   stub_request(:get, image_url).to_return(:body => File.new(image_path))
-  
+
   Magickly.dragonfly.fetch(image_url)
 end
 
