@@ -11,19 +11,21 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "mustachio"
-  gem.homepage = "http://github.com/afeld/mustachio"
-  gem.license = "MIT"
-  gem.summary = %Q{automatic mustachifying of any image}
-  gem.description = %Q{Adds a 'mustachify' shortcut to magickly.}
-  gem.email = "aidan.feldman@gmail.com"
-  gem.authors = ["Aidan Feldman"]
-  # dependencies defined in Gemfile
+if ENV['RACK_ENV'].nil? || ENV['RACK_ENV'] == 'development'
+  require 'jeweler'
+  Jeweler::Tasks.new do |gem|
+    # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+    gem.name = "mustachio"
+    gem.homepage = "http://github.com/afeld/mustachio"
+    gem.license = "MIT"
+    gem.summary = %Q{automatic mustachifying of any image}
+    gem.description = %Q{Adds a 'mustachify' shortcut to magickly.}
+    gem.email = "aidan.feldman@gmail.com"
+    gem.authors = ["Aidan Feldman"]
+    # dependencies defined in Gemfile
+  end
+  Jeweler::RubygemsDotOrgTasks.new
 end
-Jeweler::RubygemsDotOrgTasks.new
 
 require 'rspec/core'
 require 'rspec/core/rake_task'
