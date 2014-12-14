@@ -32,14 +32,4 @@
     %form.url-entry{ action: '', method: 'get' }
       #{@site}/#{@stache_num}?src=<input class="url-input" type="text" name="src" placeholder="IMAGE_URL"/>
       %input{ type: 'submit', value: 'Go' }
-    #footer
-      Created by
-      %a{:href => "http://afeld.me"}<
-        Aidan Feldman
-      \- thanks to
-      %a{:href => "https://github.com/benburkert"}<
-        Ben Burkert
-      and
-      %a{:href => "http://www.heroku.com"}<
-        Heroku
-      for hosting.
+    = erb :footer
