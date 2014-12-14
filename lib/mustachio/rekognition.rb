@@ -13,7 +13,7 @@ module Mustachio
       end
 
       def json file, jobs = 'face'
-        conn = Faraday.new :url => 'http://rekognition.com' do |faraday|
+        conn = Faraday.new :url => 'https://rekognition.com' do |faraday|
           faraday.request :multipart
           faraday.request :url_encoded
           faraday.adapter :excon
