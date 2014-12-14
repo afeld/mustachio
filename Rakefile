@@ -11,8 +11,10 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
-if defined?(Jeweler)
+begin
   require 'jeweler'
+rescue LoadError
+else
   Jeweler::Tasks.new do |gem|
     # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
     gem.name = "mustachio"
@@ -27,9 +29,11 @@ if defined?(Jeweler)
   Jeweler::RubygemsDotOrgTasks.new
 end
 
-if defined?(RSpec)
+begin
   require 'rspec/core'
   require 'rspec/core/rake_task'
+rescue LoadError
+else
   RSpec::Core::RakeTask.new(:spec) do |spec|
     spec.pattern = FileList['spec/**/*_spec.rb']
   end
