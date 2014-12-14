@@ -15,6 +15,8 @@ gem 'haml'
 
 gem 'fastimage', :require => 'fastimage'
 
+gem 'unicorn'
+
 group :development do
   gem 'jeweler'
 end
