@@ -11,7 +11,7 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
-if ENV['RACK_ENV'].nil? || ENV['RACK_ENV'] == 'development'
+if defined?(Jeweler)
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
@@ -27,18 +27,20 @@ if ENV['RACK_ENV'].nil? || ENV['RACK_ENV'] == 'development'
   Jeweler::RubygemsDotOrgTasks.new
 end
 
-require 'rspec/core'
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = FileList['spec/**/*_spec.rb']
-end
+if defined?(RSpec)
+  require 'rspec/core'
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec) do |spec|
+    spec.pattern = FileList['spec/**/*_spec.rb']
+  end
 
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
-end
+  RSpec::Core::RakeTask.new(:rcov) do |spec|
+    spec.pattern = 'spec/**/*_spec.rb'
+    spec.rcov = true
+  end
 
-task :default => :spec
+  task :default => :spec
+end
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
