@@ -9,5 +9,6 @@ To run app, you'll need credentials by signing up for an account from http://rek
 
 ```bash
 bundle
-MUSTACHIO_REKOGNITION_KEY=... MUSTACHIO_REKOGNITION_SECRET=... bundle exec rackup
+MUSTACHIO_REKOGNITION_KEY=... MUSTACHIO_REKOGNITION_SECRET=... bundle exec unicorn -c ./config/unicorn.rb -p 3000
+open http://localhost:3000
 ```
