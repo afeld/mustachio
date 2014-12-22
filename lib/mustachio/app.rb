@@ -21,8 +21,13 @@ module Mustachio
 
     def serve_stache(src, stache_arg)
       # use the specified stache, otherwise fall back to random
-      image = Magickly.process_src(src, mustachify: stache_arg)
-      image.to_response(env)
+      begin
+        image = Magickly.process_src(src, mustachify: stache_arg)
+        image.to_response(env)
+      rescue Dragonfly::DataStorage::DataNotFound
+        status 502
+        "Missing image."
+      end
     end
 
 
