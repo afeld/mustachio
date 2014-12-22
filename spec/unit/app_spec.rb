@@ -36,7 +36,7 @@ describe Mustachio::App do
     end
 
     it "handles when the image download times out" do
-      stub_request(:get, 'http://slowsite.com/foo.png').to_raise(Net::OpenTimeout)
+      stub_request(:get, 'http://slowsite.com/foo.png').to_timeout
       get '/?src=http://slowsite.com/foo.png'
       expect(last_response.status).to eq(504)
     end

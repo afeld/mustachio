@@ -34,7 +34,7 @@ module Mustachio
       rescue Dragonfly::DataStorage::DataNotFound, SocketError
         status 502
         "Image not found."
-      rescue Net::OpenTimeout
+      rescue Timeout::Error
         status 504
         "Image download timed out."
       end
