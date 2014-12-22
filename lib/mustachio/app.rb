@@ -27,6 +27,13 @@ module Mustachio
       rescue Dragonfly::DataStorage::DataNotFound, SocketError
         status 502
         "Source image not found."
+      rescue ArgumentError => e
+        if e.message == 'uncaught throw :unable_to_handle'
+          status 415
+          "Unsupported image format."
+        else
+          raise
+        end
       end
     end
 

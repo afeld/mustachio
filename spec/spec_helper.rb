@@ -41,10 +41,18 @@ RSpec.configure do |config|
 end
 
 
+def image_path(filename)
+  File.join(File.dirname(__FILE__), 'support', filename)
+end
+
+def image_file(filename)
+  path = image_path(filename)
+  File.new(path)
+end
+
 def get_photo(filename='dubya.jpeg')
   image_url = "http://www.foo.com/#{filename}"
-  image_path = File.join(File.dirname(__FILE__), 'support', filename)
-  stub_request(:get, image_url).to_return(:body => File.new(image_path))
+  stub_request(:get, image_url).to_return(body: image_file(filename))
 
   Magickly.dragonfly.fetch(image_url)
 end

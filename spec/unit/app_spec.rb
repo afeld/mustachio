@@ -28,5 +28,10 @@ describe Mustachio::App do
       get '/?src=http://nonexistentsite.com/foo.png'
       expect(last_response.status).to eq(502)
     end
+
+    it "gives a 502 when the image format can't be processed" do
+      stub_request(:get, 'http://example.com/handbag.webp').to_return(body: image_file('handbag.webp'))
+      get '/?src=http://example.com/handbag.webp'
+    end
   end
 end
