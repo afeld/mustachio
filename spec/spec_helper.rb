@@ -1,4 +1,6 @@
 ENV['RACK_ENV'] ||= 'test'
+ENV['MUSTACHIO_REKOGNITION_KEY'] = '123'
+ENV['MUSTACHIO_REKOGNITION_SECRET'] = '456'
 
 require 'rubygems'
 require 'bundler'
@@ -35,16 +37,21 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
-
-  ENV['MUSTACHIO_REKOGNITION_KEY'] = '123'
-  ENV['MUSTACHIO_REKOGNITION_SECRET'] = '456'
 end
 
 
+def image_path(filename)
+  File.join(File.dirname(__FILE__), 'support', filename)
+end
+
+def image_file(filename)
+  path = image_path(filename)
+  File.new(path)
+end
+
 def get_photo(filename='dubya.jpeg')
   image_url = "http://www.foo.com/#{filename}"
-  image_path = File.join(File.dirname(__FILE__), 'support', filename)
-  stub_request(:get, image_url).to_return(:body => File.new(image_path))
+  stub_request(:get, image_url).to_return(body: image_file(filename))
 
   Magickly.dragonfly.fetch(image_url)
 end

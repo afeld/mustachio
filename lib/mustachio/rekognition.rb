@@ -1,18 +1,13 @@
 module Mustachio
   class Rekognition
-    class << self
+    class Error < StandardError; end
 
+    class << self
       REKOGNITION_KEY = ENV['MUSTACHIO_REKOGNITION_KEY'] || raise('please set MUSTACHIO_REKOGNITION_KEY')
       REKOGNITION_SECRET = ENV['MUSTACHIO_REKOGNITION_SECRET'] || raise('please set MUSTACHIO_REKOGNITION_SECRET')
 
-      # return tuple [rekognition_json, rekognition_width, rekognition_height]
-      def data file
-        json = self.json file
-        width, height = self.dims file
-        [json, width, height]
-      end
 
-      def json file, jobs = 'face'
+      def get_response(file, jobs)
         conn = Faraday.new :url => 'https://rekognition.com' do |faraday|
           faraday.request :multipart
           faraday.request :url_encoded
@@ -28,8 +23,11 @@ module Mustachio
           :user_id       => ''
         }
 
-        response = conn.post '/func/api/', payload
+        conn.post('/func/api/', payload)
+      end
 
+      def json file, jobs = 'face'
+        response = self.get_response(file, jobs)
         JSON.parse response.body
       end
 
@@ -41,8 +39,17 @@ module Mustachio
         `file -b --mime #{file.path}`.strip.split(/[:;]\s+/)[0]
       end
 
+      def validate_response(json)
+        unless json['face_detection']
+          usage = json['usage'] || {}
+          msg = usage['status'] || 'failure.'
+          raise Error.new("Rekognition API: #{msg}")
+        end
+      end
+
       def face_detection file
         json = self.json file, 'face_part'
+        self.validate_response(json)
         width, height = self.dims file
 
         json['face_detection'].map do |entry|
