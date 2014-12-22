@@ -11,7 +11,8 @@ module Mustachio
       require 'newrelic_rpm' if ENV['NEW_RELIC_ID']
     end
 
-    before do
+
+    def redirect_to_canonical_host
       app_host = ENV['MUSTACHIO_APP_DOMAIN']
       if app_host && request.host != app_host
         request_host_with_port = request.env['HTTP_HOST']
@@ -37,6 +38,10 @@ module Mustachio
     end
 
 
+    before do
+      redirect_to_canonical_host
+    end
+
     get %r{^/(\d+|rand)?$} do |stache_num|
       src = params[:src]
       if src
@@ -60,6 +65,5 @@ module Mustachio
     get '/face_api_dev_challenge' do
       haml :face_api_dev_challenge
     end
-
   end
 end
