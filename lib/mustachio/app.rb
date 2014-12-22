@@ -24,9 +24,9 @@ module Mustachio
       begin
         image = Magickly.process_src(src, mustachify: stache_arg)
         image.to_response(env)
-      rescue Dragonfly::DataStorage::DataNotFound
+      rescue Dragonfly::DataStorage::DataNotFound, SocketError
         status 502
-        "Missing image."
+        "Source image not found."
       end
     end
 
