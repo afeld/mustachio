@@ -1,33 +1,11 @@
 module Mustachio
   class Rekognition
+    class Error < StandardError; end
+
     class << self
       REKOGNITION_KEY = ENV['MUSTACHIO_REKOGNITION_KEY'] || raise('please set MUSTACHIO_REKOGNITION_KEY')
       REKOGNITION_SECRET = ENV['MUSTACHIO_REKOGNITION_SECRET'] || raise('please set MUSTACHIO_REKOGNITION_SECRET')
 
-      # return tuple [rekognition_json, rekognition_width, rekognition_height]
-      def data file
-        json = self.json file
-        width, height = self.dims file
-        [json, width, height]
-      end
-
-      def log_error(status, body)
-        if defined?(NewRelic)
-          NewRelic::Agent.add_custom_parameters(
-          rekognition_status: status,
-          rekognition_response: body
-          )
-        end
-
-        $stderr.puts "ERROR: #{status} - #{body}"
-      end
-
-      def handle_error(response)
-        status = response.status
-        if status != 200
-          log_error(status, response.body)
-        end
-      end
 
       def get_response(file, jobs)
         conn = Faraday.new :url => 'https://rekognition.com' do |faraday|
@@ -50,8 +28,6 @@ module Mustachio
 
       def json file, jobs = 'face'
         response = self.get_response(file, jobs)
-        self.handle_error(response)
-
         JSON.parse response.body
       end
 
@@ -63,8 +39,17 @@ module Mustachio
         `file -b --mime #{file.path}`.strip.split(/[:;]\s+/)[0]
       end
 
+      def validate_response(json)
+        unless json['face_detection']
+          usage = json['usage'] || {}
+          msg = usage['status'] || "Rekognition API failure."
+          raise Error.new(msg)
+        end
+      end
+
       def face_detection file
         json = self.json file, 'face_part'
+        self.validate_response(json)
         width, height = self.dims file
 
         json['face_detection'].map do |entry|
