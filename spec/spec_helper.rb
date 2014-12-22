@@ -1,4 +1,6 @@
 ENV['RACK_ENV'] ||= 'test'
+ENV['MUSTACHIO_REKOGNITION_KEY'] = '123'
+ENV['MUSTACHIO_REKOGNITION_SECRET'] = '456'
 
 require 'rubygems'
 require 'bundler'
@@ -35,9 +37,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
-
-  ENV['MUSTACHIO_REKOGNITION_KEY'] = '123'
-  ENV['MUSTACHIO_REKOGNITION_SECRET'] = '456'
 end
 
 

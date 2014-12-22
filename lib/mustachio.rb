@@ -1,6 +1,7 @@
 require 'magickly'
 require 'fastimage'
 require File.join(File.dirname(__FILE__), 'mustachio', 'factories')
+require File.join(File.dirname(__FILE__), 'mustachio', 'rekognition')
 require File.join(File.dirname(__FILE__), 'mustachio', 'shortcuts')
 
 
@@ -8,19 +9,19 @@ module Mustachio
 #  FACE_POS_ATTRS = ['center', 'eye_left', 'eye_right', 'mouth_left', 'mouth_center', 'mouth_right', 'nose']
   REQUIRED_FACE_ATTRS = %w(mouth_left mouth_right nose)
   FACE_SPAN_SCALE = 2.0
-  
+
   class << self
 
     def mustaches
       @@mustaches
     end
-    
+
     def setup
       staches = YAML.load(File.read(File.join(File.dirname(__FILE__), '..', 'config', 'staches.yml')))
       staches.map! do |stache|
         stache['vert_offset'] ||= 0
         stache['mouth_overlap'] ||= 0
-        
+
         stache['file_path'] = File.expand_path(File.join(File.dirname(__FILE__), 'mustachio', 'public', 'images', 'staches', stache['filename']))
         unless stache['width'] && stache['height']
           stache['width'], stache['height'] = FastImage.size(File.new(stache['file_path']))
@@ -45,7 +46,7 @@ module Mustachio
         Mustachio::Rekognition.face_detection file
       end
     end
-    
+
     def face_data(file_or_job)
       file = case file_or_job
       when Dragonfly::Job
@@ -64,7 +65,7 @@ module Mustachio
 
       @@face_detection_proc.call file
     end
-    
+
     def face_data_as_px(file_or_job, width, height)
       faces = self.face_data file_or_job
 
@@ -77,22 +78,22 @@ module Mustachio
       end
       new_faces
     end
-    
+
     # TODO : Fix to work with pluggable face detection
     # def face_span(file_or_job)
     #   face_data = self.face_data_as_px(file_or_job)
     #   faces = face_data['tags']
-      
+
     #   left_face, right_face = faces.minmax_by{|face| face['center']['x'] }
     #   top_face, bottom_face = faces.minmax_by{|face| face['center']['y'] }
-      
+
     #   top = top_face['eye_left']['y']
     #   bottom = bottom_face['mouth_center']['y']
     #   right = right_face['eye_right']['x']
     #   left = left_face['eye_left']['x']
     #   width = right - left
     #   height = bottom - top
-      
+
     #   # compute adjusted values for padding around face span
     #   adj_width = width * FACE_SPAN_SCALE
     #   adj_height = height * FACE_SPAN_SCALE
@@ -100,7 +101,7 @@ module Mustachio
     #   adj_bottom = bottom + ((adj_height - height) / 2.0)
     #   adj_right = right + ((adj_width - width) / 2.0)
     #   adj_left = left - ((adj_width - width) / 2.0)
-      
+
     #   {
     #     :top => adj_top,
     #     :bottom => adj_bottom,
@@ -113,9 +114,9 @@ module Mustachio
     #   }
     # end
 
-    
+
   end
-  
-  
+
+
   self.setup
 end
