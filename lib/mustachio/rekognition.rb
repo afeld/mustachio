@@ -12,6 +12,21 @@ module Mustachio
         [json, width, height]
       end
 
+      def handle_error(response)
+        if response.status != 200
+          status = response.status
+          body = response.body
+          if defined?(NewRelic)
+            NewRelic::Agent.add_custom_parameters(
+            rekognition_status: status,
+            rekognition_response: body
+            )
+          end
+
+          $stderr.puts "ERROR: #{status} - #{body}"
+        end
+      end
+
       def json file, jobs = 'face'
         conn = Faraday.new :url => 'https://rekognition.com' do |faraday|
           faraday.request :multipart
@@ -29,6 +44,7 @@ module Mustachio
         }
 
         response = conn.post '/func/api/', payload
+        self.handle_error(response)
 
         JSON.parse response.body
       end
