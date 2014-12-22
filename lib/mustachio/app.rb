@@ -20,7 +20,6 @@ module Mustachio
     end
 
     def serve_stache(src, stache_arg)
-      # use the specified stache, otherwise fall back to random
       begin
         image = Magickly.process_src(src, mustachify: stache_arg)
         image.to_response(env)
