@@ -20,23 +20,32 @@ module Mustachio
       end
     end
 
+    def valid_url?(url)
+      url =~ /\A#{URI::regexp(['http', 'https'])}\z/
+    end
+
     def serve_stache(src, stache_arg)
-      begin
-        image = Magickly.process_src(src, mustachify: stache_arg)
-        image.to_response(env)
-      rescue ArgumentError => e
-        if e.message == 'uncaught throw :unable_to_handle'
-          status 415
-          "Unsupported image format."
-        else
-          raise
+      if valid_url?(src)
+        begin
+          image = Magickly.process_src(src, mustachify: stache_arg)
+          image.to_response(env)
+        rescue ArgumentError => e
+          if e.message == 'uncaught throw :unable_to_handle'
+            status 415
+            "Unsupported image format."
+          else
+            raise
+          end
+        rescue Dragonfly::DataStorage::DataNotFound, SocketError
+          status 502
+          "Image not found."
+        rescue Timeout::Error
+          status 504
+          "Image download timed out."
         end
-      rescue Dragonfly::DataStorage::DataNotFound, SocketError
-        status 502
-        "Image not found."
-      rescue Timeout::Error
-        status 504
-        "Image download timed out."
+      else
+        status 415
+        "Invalid src parameter."
       end
     end
 

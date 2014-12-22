@@ -40,5 +40,10 @@ describe Mustachio::App do
       get '/?src=http://slowsite.com/foo.png'
       expect(last_response.status).to eq(504)
     end
+
+    it "handles invalid URLs" do
+      get '/?src=foo'
+      expect(last_response.status).to eq(415)
+    end
   end
 end
