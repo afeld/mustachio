@@ -24,9 +24,6 @@ module Mustachio
       begin
         image = Magickly.process_src(src, mustachify: stache_arg)
         image.to_response(env)
-      rescue Dragonfly::DataStorage::DataNotFound, SocketError
-        status 502
-        "Source image not found."
       rescue ArgumentError => e
         if e.message == 'uncaught throw :unable_to_handle'
           status 415
@@ -34,6 +31,12 @@ module Mustachio
         else
           raise
         end
+      rescue Dragonfly::DataStorage::DataNotFound, SocketError
+        status 502
+        "Image not found."
+      rescue Net::OpenTimeout
+        status 504
+        "Image download timed out."
       end
     end
 
