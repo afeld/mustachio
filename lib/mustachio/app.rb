@@ -41,7 +41,7 @@ module Mustachio
           "Image not found."
         rescue Mustachio::Rekognition::Error => e
           status 502
-          e.message.presence || "Rekognition API failure."
+          e.message
         rescue Timeout::Error
           status 504
           "Image download timed out."

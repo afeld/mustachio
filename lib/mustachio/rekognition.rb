@@ -42,8 +42,8 @@ module Mustachio
       def validate_response(json)
         unless json['face_detection']
           usage = json['usage'] || {}
-          msg = usage['status'] || "Rekognition API failure."
-          raise Error.new(msg)
+          msg = usage['status'] || 'failure.'
+          raise Error.new("Rekognition API: #{msg}")
         end
       end
 
