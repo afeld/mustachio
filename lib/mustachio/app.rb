@@ -1,4 +1,5 @@
 require File.join(File.dirname(__FILE__), '..', 'mustachio')
+require File.join(File.dirname(__FILE__), 'rack_attack')
 require 'sinatra/base'
 
 module Mustachio
@@ -6,6 +7,7 @@ module Mustachio
     DEMO_IMAGE = 'http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg'
 
     set :static, true
+    use Rack::Attack
 
     configure :production do
       require 'newrelic_rpm' if ENV['NEW_RELIC_ID']

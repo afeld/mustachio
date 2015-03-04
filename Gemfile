@@ -16,6 +16,7 @@ gem 'haml'
 gem 'fastimage', :require => 'fastimage'
 
 gem 'unicorn'
+gem 'rack-attack'
 
 group :development do
   gem 'jeweler'

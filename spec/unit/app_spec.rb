@@ -52,5 +52,20 @@ describe Mustachio::App do
       get '/?src=foo'
       expect(last_response.status).to eq(415)
     end
+
+    it "rate limits requests" do
+      Rack::Attack::RPM.times do
+        get '/?src=foo'
+        expect(last_response.status).to_not eq(429)
+      end
+      get '/?src=foo'
+
+      expect(last_response.status).to eq(429)
+    end
+
+    it "blocks circular requests" do
+      get "/?src=http://#{Rack::Test::DEFAULT_HOST}/example.jpg"
+      expect(last_response.status).to eq(403)
+    end
   end
 end
