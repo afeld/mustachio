@@ -54,8 +54,9 @@ describe Mustachio::App do
     end
 
     it "rate limits requests" do
-      10.times do
+      Rack::Attack::RPM.times do
         get '/?src=foo'
+        expect(last_response.status).to_not eq(429)
       end
       get '/?src=foo'
 
