@@ -52,5 +52,14 @@ describe Mustachio::App do
       get '/?src=foo'
       expect(last_response.status).to eq(415)
     end
+
+    it "rate limits requests" do
+      10.times do
+        get '/?src=foo'
+      end
+      get '/?src=foo'
+
+      expect(last_response.status).to eq(429)
+    end
   end
 end
