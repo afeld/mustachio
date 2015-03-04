@@ -89,6 +89,8 @@ GEM
       multi_xml (~> 0.5)
       rack (~> 1.2)
     rack (1.5.2)
+    rack-attack (4.2.0)
+      rack
     rack-protection (1.5.3)
       rack
     rack-test (0.6.2)
@@ -143,6 +145,7 @@ DEPENDENCIES
   jeweler
   magickly!
   newrelic_rpm
+  rack-attack
   rack-test
   rspec
   sinatra (~> 1.2)
