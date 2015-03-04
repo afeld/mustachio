@@ -10,4 +10,14 @@ class Rack::Attack
   throttle('req/ip', :limit => 10, :period => 1.minute) do |req|
     req.ip # unless req.path.starts_with?('/assets')
   end
+
+  blacklist('block circular requests') do |req|
+    src = req.params['src']
+    if src
+      uri = Addressable::URI.parse(src)
+      req.host == uri.host
+    else
+      false
+    end
+  end
 end

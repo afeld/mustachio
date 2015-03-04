@@ -61,5 +61,10 @@ describe Mustachio::App do
 
       expect(last_response.status).to eq(429)
     end
+
+    it "blocks circular requests" do
+      get "/?src=http://#{Rack::Test::DEFAULT_HOST}/example.jpg"
+      expect(last_response.status).to eq(403)
+    end
   end
 end
