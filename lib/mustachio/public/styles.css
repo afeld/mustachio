@@ -1,0 +1,24 @@
+img {
+  border: none;
+  margin-bottom: 15px;
+}
+.url-entry,
+.url-entry input {
+  font-size: 25px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+.url-input {
+  width: 8em;
+}
+footer {
+  margin-top: 250px;
+  text-align: center;
+}
+footer,
+footer a {
+  color: grey;
+}
+.orbeus-logo {
+  max-height: 90px;
+}
