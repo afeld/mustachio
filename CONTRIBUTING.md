@@ -1,4 +1,4 @@
-To run tests:
+Requires Ruby 2.x. To run tests:
 
 ```bash
 bundle
