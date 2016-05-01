@@ -33,22 +33,6 @@ module Mustachio
       @@mustaches = staches
     end
 
-    # block should take |File|
-    # and return hash with keys 'mouth_left', 'mouth_right', 'nose'  (and optionally 'mouth_center')
-    # with values containing keys 'x' and 'y'
-    # whose values are between 0 and 100
-    def setup_face_detection &block
-      @@face_detection_proc = block
-    end
-
-    def setup_face_detector
-      require File.join(File.dirname(__FILE__), 'mustachio', 'face_detector')
-
-      self.setup_face_detection do |file|
-        Mustachio::FaceDetector.run(file)
-      end
-    end
-
     def face_data(file_or_job)
       file = case file_or_job
       when Dragonfly::Job
@@ -62,10 +46,7 @@ module Mustachio
         raise ArgumentError, "A #{file_or_job.class} is not a valid argument for #face_data.  Please provide a File or a Dragonfly::Job."
       end
 
-      # default to using Google Cloud Vision API for face detection
-      self.setup_face_detector unless defined? @@face_detection_proc
-
-      @@face_detection_proc.call file
+      Mustachio::FaceDetector.run(file)
     end
 
     def face_data_as_px(file_or_job, width, height)
