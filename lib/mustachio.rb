@@ -1,5 +1,8 @@
 require 'magickly'
 require 'fastimage'
+require 'face_detect'
+require 'face_detect/adapter/google'
+
 require File.join(File.dirname(__FILE__), 'mustachio', 'factories')
 require File.join(File.dirname(__FILE__), 'mustachio', 'rekognition')
 require File.join(File.dirname(__FILE__), 'mustachio', 'shortcuts')

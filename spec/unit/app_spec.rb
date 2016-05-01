@@ -18,7 +18,7 @@ describe Mustachio::App do
 
   describe "GET /?src=..." do
     it "handles a Rekognition API failure" do
-      stub_request(:get, 'http://example.com/dubya.jpeg').to_return(body: image_file('dubya.jpeg'))
+      stub_request(:get, 'http://example.com/dubya.jpeg').to_return(body: support_file('dubya.jpeg'))
       expect(Mustachio::Rekognition).to receive(:face_detection).and_raise(Mustachio::Rekognition::Error)
       get '/?src=http://example.com/dubya.jpeg'
       expect(last_response.status).to eq(502)
@@ -37,7 +37,7 @@ describe Mustachio::App do
     end
 
     it "handles when the image format can't be processed" do
-      stub_request(:get, 'http://example.com/handbag.webp').to_return(body: image_file('handbag.webp'))
+      stub_request(:get, 'http://example.com/handbag.webp').to_return(body: support_file('handbag.webp'))
       get '/?src=http://example.com/handbag.webp'
       expect(last_response.status).to eq(415)
     end

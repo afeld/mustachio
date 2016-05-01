@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby '2.3.1'
 
 gem 'sinatra', '~> 1.2', :require => 'sinatra/base'
 gem 'dragonfly', '~> 0.9'
@@ -7,8 +8,9 @@ gem('magickly',
     :ref => 'cd17608a9c4468da1f738815a96dc2a9473fc029')
 #gem 'magickly', :path => '../magickly'
 
-gem 'excon'
-gem 'faraday'
+gem 'face_detect'
+gem 'googleauth'
+gem 'google-api-client'
 
 gem 'addressable', :require => 'addressable/uri'
 gem 'haml'
@@ -32,7 +34,6 @@ end
 
 group :test do
   gem 'webmock', :require => 'webmock/rspec'
-  gem 'vcr'
 end
 
 group :production do
