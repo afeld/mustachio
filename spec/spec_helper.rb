@@ -1,6 +1,4 @@
 ENV['RACK_ENV'] ||= 'test'
-ENV['MUSTACHIO_REKOGNITION_KEY'] = '123'
-ENV['MUSTACHIO_REKOGNITION_SECRET'] = '456'
 
 require 'rubygems'
 require 'bundler'
@@ -9,27 +7,12 @@ Bundler.require
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'mustachio/app'
 require 'webmock/rspec'
-require 'vcr'
 
 Mustachio::App.set :environment, :test
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[File.join('spec', 'support', '**', '*.rb')].each {|f| require f}
-
-VCR.configure do |c|
-  c.cassette_library_dir = File.join(File.dirname(__FILE__), 'fixtures', 'vcr_cassettes')
-  c.hook_into :faraday
-  c.default_cassette_options = {
-    :record => :new_episodes
-  }
-
-  # VCR doesn't recognize when requests are explicitly mocked - this is a workaround
-  # https://github.com/myronmarston/vcr/issues/146
-  c.allow_http_connections_when_no_cassette = true
-
-  c.configure_rspec_metadata!
-end
+Dir[File.join('spec', 'support', '**', '*.rb')].each {|f| require f }
 
 RSpec.configure do |config|
   config.mock_with :rspec
@@ -40,22 +23,26 @@ RSpec.configure do |config|
 
   config.before do
     Rack::Attack.cache.store.clear
+
+    # https://github.com/afeld/face_detect/issues/1
+    authorization = instance_double(Google::Auth::ServiceAccountCredentials)
+    allow_any_instance_of(FaceDetect::Adapter::Google).to receive(:authorization).and_return(authorization)
   end
 end
 
 
-def image_path(filename)
+def support_file_path(filename)
   File.join(File.dirname(__FILE__), 'support', filename)
 end
 
-def image_file(filename)
-  path = image_path(filename)
+def support_file(filename)
+  path = support_file_path(filename)
   File.new(path)
 end
 
 def get_photo(filename='dubya.jpeg')
   image_url = "http://www.foo.com/#{filename}"
-  stub_request(:get, image_url).to_return(body: image_file(filename))
+  stub_request(:get, image_url).to_return(body: support_file(filename))
 
   Magickly.dragonfly.fetch(image_url)
 end
@@ -72,9 +59,14 @@ def stub_face_data(file_or_job)
     raise ArgumentError, "A #{file_or_job.class} is not a vaild type for #stub_face_data."
   end
 
-  result = nil
-  VCR.use_cassette( basename.chomp(File.extname(basename)) ) do
-    result = yield(file_or_job)
-  end
-  result
+  # https://github.com/afeld/face_detect/issues/1
+  body = support_file('dubya.json').read
+  stub_request(:post, %r{^https://vision.googleapis.com/}).to_return(
+    headers: {
+      'Content-Type' => 'application/json'
+    },
+    body: body
+  )
+
+  yield(file_or_job)
 end

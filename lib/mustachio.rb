@@ -1,12 +1,14 @@
 require 'magickly'
 require 'fastimage'
+require 'face_detect'
+require 'face_detect/adapter/google'
+
 require File.join(File.dirname(__FILE__), 'mustachio', 'factories')
-require File.join(File.dirname(__FILE__), 'mustachio', 'rekognition')
+require File.join(File.dirname(__FILE__), 'mustachio', 'face_detector')
 require File.join(File.dirname(__FILE__), 'mustachio', 'shortcuts')
 
 
 module Mustachio
-#  FACE_POS_ATTRS = ['center', 'eye_left', 'eye_right', 'mouth_left', 'mouth_center', 'mouth_right', 'nose']
   REQUIRED_FACE_ATTRS = %w(mouth_left mouth_right nose)
   FACE_SPAN_SCALE = 2.0
 
@@ -39,11 +41,11 @@ module Mustachio
       @@face_detection_proc = block
     end
 
-    def setup_rekognition
-      require File.join(File.dirname(__FILE__), 'mustachio', 'rekognition')
+    def setup_face_detector
+      require File.join(File.dirname(__FILE__), 'mustachio', 'face_detector')
 
       self.setup_face_detection do |file|
-        Mustachio::Rekognition.face_detection file
+        Mustachio::FaceDetector.run(file)
       end
     end
 
@@ -60,8 +62,8 @@ module Mustachio
         raise ArgumentError, "A #{file_or_job.class} is not a valid argument for #face_data.  Please provide a File or a Dragonfly::Job."
       end
 
-      # default to using Rekognition for face detection
-      self.setup_rekognition unless defined? @@face_detection_proc
+      # default to using Google Cloud Vision API for face detection
+      self.setup_face_detector unless defined? @@face_detection_proc
 
       @@face_detection_proc.call file
     end

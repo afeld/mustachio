@@ -2,12 +2,6 @@ img {
   border: none;
   margin-bottom: 15px;
 }
-.notice {
-  font-weight: bold;
-  text-align: center;
-  font-size: 2em;
-  margin: 20%;
-}
 .url-entry,
 .url-entry input {
   font-size: 25px;
