@@ -17,6 +17,8 @@ describe Mustachio::App do
   end
 
   describe "GET /?src=..." do
+    it "returns the transformed image"
+
     it "handles a missing image file" do
       stub_request(:get, 'http://existentsite.com/missing.png').to_return(status: 404)
       get '/?src=http://existentsite.com/missing.png'
@@ -59,6 +61,17 @@ describe Mustachio::App do
     it "blocks circular requests" do
       get "/?src=http://#{Rack::Test::DEFAULT_HOST}/example.jpg"
       expect(last_response.status).to eq(403)
+    end
+
+    context "with API disabled" do
+      it "denies the request" do
+        ENV['DISABLE_API'] = 'true'
+
+        get '/?src=http://example.com/img.png'
+        expect(last_response.status).to eq(403)
+
+        ENV.delete('DISABLE_API')
+      end
     end
   end
 end

@@ -20,9 +20,11 @@ bundle exec rake
 
 ## Production
 
-This information will only be relevant if you have access to the various services.
+There is a `DISABLE_API` environment variable that can be used to take the API down.
 
 ### Analytics
+
+This information will only be relevant if you have access to the various services.
 
 * [CloudFlare](https://www.cloudflare.com/a/analytics/mustachify.me)
 * [Google Cloud Vision API](https://console.cloud.google.com/apis/api/vision.googleapis.com/usage?project=mustachio-1298&duration=PT12H)

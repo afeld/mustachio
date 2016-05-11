@@ -7,8 +7,12 @@
   %body
     %a{:href => "http://github.com/afeld/mustachio"}
       %img{:style => "position: absolute; top: 0; right: 0; border: 0;", :src => "https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png", :alt => "Fork me on GitHub"}
-    %img{:src => "/#{@stache_num}?src=#{DEMO_IMAGE}"}
-    %form.url-entry{ action: '', method: 'get' }
-      #{@site}/#{@stache_num}?src=<input class="url-input" type="text" name="src" placeholder="IMAGE_URL"/>
-      %input{ type: 'submit', value: 'Go' }
+    - if ENV['DISABLE_API']
+      .notice
+        Unfortunately, mustachify.me is down until we can figure out another option for facial detection. Developers, <a href="https://github.com/afeld/mustachio/issues/38">would love some help</a>!
+    - else
+      %img{:src => "/#{@stache_num}?src=#{DEMO_IMAGE}"}
+      %form.url-entry{ action: '', method: 'get' }
+        #{@site}/#{@stache_num}?src=<input class="url-input" type="text" name="src" placeholder="IMAGE_URL"/>
+        %input{ type: 'submit', value: 'Go' }
     = erb :footer

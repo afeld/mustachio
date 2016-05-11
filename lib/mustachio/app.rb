@@ -27,7 +27,10 @@ module Mustachio
     end
 
     def serve_stache(src, stache_arg)
-      if valid_url?(src)
+      if ENV['DISABLE_API']
+        status 403
+        "API has been temporarily disabled. See https://mustachify.me for more information."
+      elsif valid_url?(src)
         begin
           image = Magickly.process_src(src, mustachify: stache_arg)
           image.to_response(env)
